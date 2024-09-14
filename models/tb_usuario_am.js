@@ -7,17 +7,17 @@ const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
         primaryKey: true
     },
     CPF: {
-        
-        type: DataTypes.STRING(14),
+
+        type: Sequelize.STRING(14),
         allowNull: false,
         unique: true
     },
     COMENTARIO: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull: true
     },
     ID_USUARIO: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
         unique: true,
         references: {
@@ -26,7 +26,7 @@ const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
         }
     },
     IMAGEM: {
-        type: DataTypes.BLOB('medium'),
+        type: Sequelize.BLOB('medium'),
         allowNull: true
     }
 }, {

@@ -2,25 +2,25 @@ const { sequelize, Sequelize } = require('./db');
 
 const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
     ID_PRODUTOR: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
     CNPJ: {
-      type: DataTypes.STRING(18),
+      type: Sequelize.STRING(18),
       allowNull: false,
       unique: true
     },
     NOME_FANTASIA: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: true
     },
     COMENTARIO: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: true
     },
     ID_USUARIO: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       unique: true,
       references: {
@@ -30,7 +30,7 @@ const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
     },
     IMAGEM: {
         
-      type: DataTypes.BLOB('medium'),
+      type: Sequelize.BLOB('medium'),
       allowNull: true
     }
   }, {

@@ -3,44 +3,44 @@ const { sequelize, Sequelize } = require('./db');
 const Usuario = sequelize.define('Usuario', {
 
   ID_USUARIO: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,
     unique: true
   },
   NOME: {
-    type: DataTypes.STRING(50),
+    type: Sequelize.STRING(50),
     allowNull: false
   },
   EMAIL: {
-    type: DataTypes.STRING(100),
+    type: Sequelize.STRING(100),
     allowNull: false,
     unique: true
   },
   SENHA: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(255),
     allowNull: false
   },
   sexo: {
-    type: DataTypes.ENUM('F', 'M', 'P'),
+    type: Sequelize.ENUM('F', 'M', 'P'),
     allowNull: true
   },
   flag_tipo_usuario: {
-    type: DataTypes.INTEGER(1),
+    type: Sequelize.INTEGER(1),
     allowNull: false
   },
   DATA_NASC: {
-    type: DataTypes.DATEONLY,
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
   TELEFONE: {
-    type: DataTypes.STRING(15),
+    type: Sequelize.STRING(15),
     allowNull: false
   },
   GENERO_MUSICAL: {
-    
-    type: DataTypes.ENUM(
+
+    type: Sequelize.ENUM(
       'Rock', 'Sertanejo', 'Pop', 'Hip_Hop', 'Jazz', 'Blues', 'Classical', 
       'Electronic_Dance_Music', 'Country', 'Reggae', 'Reggaeton', 'Soul', 
       'Funk', 'Disco', 'Gospel', 'Todos'

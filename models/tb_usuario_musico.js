@@ -3,18 +3,18 @@ const { sequelize, Sequelize } = require('./db');
 const UsuarioMusico = sequelize.define('Usuario_musico', {
 
   ID_MUSICO: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
   CPF: {
-    type: DataTypes.STRING(14),
+    type: Sequelize.STRING(14),
     allowNull: false,
     unique: true
   },
   ID_USUARIO: {
-    
-    type: DataTypes.INTEGER,
+
+    type: Sequelize.INTEGER,
     allowNull: true,
     unique: true,
     references: {
@@ -23,11 +23,11 @@ const UsuarioMusico = sequelize.define('Usuario_musico', {
     }
   },
   IMAGEM: {
-    type: DataTypes.BLOB('medium'),
+    type: Sequelize.BLOB('medium'),
     allowNull: true
   },
   COMENTARIO: {
-    type: DataTypes.TEXT,
+    type: Sequelize.TEXT,
     allowNull: true
   }
 }, {
