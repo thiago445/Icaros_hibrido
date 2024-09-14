@@ -1,31 +1,36 @@
 const { sequelize, Sequelize } = require('./db');
 
-const Usuario_Am = sequelize.define("TB_USUARIO_AM", {
-    id: {
-        type: Sequelize.INTEGER, 
+const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
+    ID_AMANTE_MUSICA: {
+        type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
     },
-    cpf: {
-        type: Sequelize.STRING, 
+    CPF: {
+        type: DataTypes.STRING(14),
         allowNull: false,
-        unique:true
+        unique: true
     },
-    NOME:{
-        type: Sequelize.STRING, 
-        allowNull: false,
+    COMENTARIO: {
+        type: DataTypes.TEXT,
+        allowNull: true
     },
-    TB_USUARIO_ID_USUARIO:{
-        type: Sequelize.INTEGER, 
-        allowNull: false,
+    ID_USUARIO: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        unique: true,
+        references: {
+            model: 'tb_usuario', // Nome da tabela referenciada
+            key: 'ID_USUARIO'
+        }
     },
-    TB_EVENTOS_ID_EVENTO:{
-        type: Sequelize.INTEGER, 
-        allowNull: false,
+    IMAGEM: {
+        type: DataTypes.BLOB('medium'),
+        allowNull: true
     }
-    
-    
+}, {
+    tableName: 'tb_usuario_am',
+    timestamps: false, // Ajuste conforme a necessidade
 });
-// sequelize.sync({ force: false })
 
-module.exports = Usuario_Am;
+module.exports = UsuarioAmanteMusica;

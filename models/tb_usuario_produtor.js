@@ -1,27 +1,41 @@
 const { sequelize, Sequelize } = require('./db');
 
-const Usuario_Produtor = sequelize.define("TB_USUARIO_PRODUTOR", {
-    id: {
-        type: Sequelize.INTEGER, 
-        autoIncrement: true,
-        primaryKey: true,
+const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
+    ID_PRODUTOR: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
     },
-    cnpj: {
-        type: Sequelize.STRING, 
-        allowNull: false,
-        unique:true
+    CNPJ: {
+      type: DataTypes.STRING(18),
+      allowNull: false,
+      unique: true
     },
-    NOME_EMPRESA:{
-        type: Sequelize.STRING, 
-        allowNull: false,
+    NOME_FANTASIA: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
-    TB_USUARIO_ID_USUARIO:{
-        type: Sequelize.INTEGER, 
-        allowNull: false,
+    COMENTARIO: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    ID_USUARIO: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      unique: true,
+      references: {
+        model: 'tb_usuario', // Nome da tabela referenciada
+        key: 'ID_USUARIO'
+      }
+    },
+    IMAGEM: {
+      type: DataTypes.BLOB('medium'),
+      allowNull: true
     }
-    
-    
-});
-// sequelize.sync({ force: false })
-
-module.exports = Usuario_Produtor;
+  }, {
+    tableName: 'tb_usuario_produtor',
+    timestamps: false, // Ajuste conforme a necessidade
+  });
+  
+  module.exports = UsuarioProdutor;
+  
