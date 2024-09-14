@@ -1,7 +1,7 @@
 const { sequelize, Sequelize } = require('./db');
 
 const Usuario = sequelize.define('Usuario', {
-  
+
   ID_USUARIO: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -39,6 +39,7 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false
   },
   GENERO_MUSICAL: {
+    
     type: DataTypes.ENUM(
       'Rock', 'Sertanejo', 'Pop', 'Hip_Hop', 'Jazz', 'Blues', 'Classical', 
       'Electronic_Dance_Music', 'Country', 'Reggae', 'Reggaeton', 'Soul', 

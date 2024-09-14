@@ -29,6 +29,7 @@ const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
       }
     },
     IMAGEM: {
+        
       type: DataTypes.BLOB('medium'),
       allowNull: true
     }

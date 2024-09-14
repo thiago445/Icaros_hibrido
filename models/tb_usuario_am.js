@@ -7,6 +7,7 @@ const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
         primaryKey: true
     },
     CPF: {
+        
         type: DataTypes.STRING(14),
         allowNull: false,
         unique: true

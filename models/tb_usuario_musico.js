@@ -13,6 +13,7 @@ const UsuarioMusico = sequelize.define('Usuario_musico', {
     unique: true
   },
   ID_USUARIO: {
+    
     type: DataTypes.INTEGER,
     allowNull: true,
     unique: true,
