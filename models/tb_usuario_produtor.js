@@ -1,4 +1,5 @@
 const { sequelize, Sequelize } = require('./db');
+const Usuario = require('./tb_usuario'); // Ajuste o caminho para o seu modelo Usuario
 
 const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
     ID_PRODUTOR: {
@@ -24,7 +25,7 @@ const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
       allowNull: true,
       unique: true,
       references: {
-        model: 'tb_usuario', // Nome da tabela referenciada
+        model: Usuario, // Nome da tabela referenciada
         key: 'ID_USUARIO'
       }
     },

@@ -1,7 +1,7 @@
 const { sequelize, Sequelize } = require('./db');
+const Usuario = require('./tb_usuario'); // Ajuste o caminho para o seu modelo Usuario
 
-const UsuarioMusico = sequelize.define('Usuario_musico', {
-
+const UsuarioMusico = sequelize.define('UsuarioMusico', {
   ID_MUSICO: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -13,12 +13,10 @@ const UsuarioMusico = sequelize.define('Usuario_musico', {
     unique: true
   },
   ID_USUARIO: {
-
     type: Sequelize.INTEGER,
     allowNull: true,
-    unique: true,
     references: {
-      model: 'tb_usuario', // Nome da tabela referenciada
+      model: Usuario, // Referência ao modelo `Usuario`
       key: 'ID_USUARIO'
     }
   },
@@ -32,7 +30,7 @@ const UsuarioMusico = sequelize.define('Usuario_musico', {
   }
 }, {
   tableName: 'tb_usuario_musico',
-  timestamps: false, // Ajuste conforme a necessidade
+  timestamps: false,
 });
 
 module.exports = UsuarioMusico;

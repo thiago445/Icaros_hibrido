@@ -1,8 +1,9 @@
 const { sequelize, Sequelize } = require('./db');
+const Usuario = require('./tb_usuario'); // Ajuste o caminho para o seu modelo Usuario
 
 const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
     ID_AMANTE_MUSICA: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -21,7 +22,7 @@ const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
         allowNull: true,
         unique: true,
         references: {
-            model: 'tb_usuario', // Nome da tabela referenciada
+            model: Usuario, // Nome da tabela referenciada
             key: 'ID_USUARIO'
         }
     },
