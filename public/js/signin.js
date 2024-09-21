@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('CadastroForm');
+    const select = document.getElementById('flagUserType');
+    const cpfField = document.getElementById('cpfField');
+    const cnpjField = document.getElementById('cnpjField');
+    const cpfInput = document.getElementById('cpf');
+    const cnpjInput = document.getElementById('cnpj');
+    const generoInput = document.getElementById('generoMusical');
+
     if (form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -48,83 +55,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Erro ao obter nome da empresa. Tente novamente.');
                 });
             }
-                
-         
-            
         });
     } else {
         console.error('Form with ID "CadastroForm" not found.');
     }
-});
-
-// Função para realizar a requisição à API da BrasilAPI
-async function obterNomeEmpresa(cnpj) {
-    const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Erro na requisição');
-        }
-        const data = await response.json();
-
-        if (data.error) {
-            throw new Error(data.message);
-        }
-
-        return data.razao_social; // Retorna o nome da empresa
-    } catch (error) {
-        console.error("Erro ao obter nome da empresa:", error);
-        return null;
-    }
-}
-
-// Função para enviar dados ao backend
-function enviarDados(user, specificUserKey, specificUser) {
-    const payload = { user: user };
-    payload[specificUserKey] = specificUser;
-
-    console.log('Payload being sent:', payload); // Log para depuração
-
-    fetch('http://localhost:8081/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        window.location.href = '/login';
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
-// Função para mostrar opções de CPF/CNPJ
-document.addEventListener('DOMContentLoaded', function() {
-    const select = document.getElementById('flagTipoUsuario');
-    const cpfField = document.getElementById('cpfField');
-    const cnpjField = document.getElementById('cnpjField');
-    const cpfInput = document.getElementById('cpf');
-    const cnpjInput = document.getElementById('cnpj');
 
     function mostrarOpcao() {
         cpfField.style.display = 'none';
         cnpjField.style.display = 'none';
         cpfInput.required = false;
         cnpjInput.required = false;
+        generoInput.required = false;
 
-        if (select.value == 1 || select.value == 2) {
+        if (select.value == 1) {
             cpfField.style.display = 'block';
             cpfInput.required = true;
+        } else if (select.value == 2) {
+            cpfField.style.display = 'block';
+            cpfInput.required = true;
+            generoInput.required = true;
         } else if (select.value == 3) {
             cnpjField.style.display = 'block';
             cnpjInput.required = true;
@@ -133,10 +82,95 @@ document.addEventListener('DOMContentLoaded', function() {
 
     select.addEventListener('change', mostrarOpcao);
     mostrarOpcao();
-});
 
-$(document).ready(function() {
-    $('#cel').mask('(00) 00000-0000'); // Máscara para números de celular brasileiros
-    $('#cpf').mask('000.000.000-00', {reverse: true}); // Máscara para CPF
-    $('#cnpj').mask('00.000.000/0000-00', {reverse: true}); // Máscara para CNPJ
+    async function obterNomeEmpresa(cnpj) {
+        // Remover caracteres especiais e deixar apenas números
+        const cnpjFormatado = cnpj.replace(/[^\d]+/g, '');
+    
+        const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpjFormatado}`;
+    
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            const data = await response.json();
+            
+            // Log para depuração da resposta
+            console.log('Dados retornados:', data);
+    
+            if (data.error) {
+                throw new Error(data.message);
+            }
+    
+            return data.razao_social; // Retorna o nome da empresa
+        } catch (error) {
+            console.error("Erro ao obter nome da empresa:", error);
+            return null;
+        }
+    }
+    
+    function enviarDados(user, specificUserKey, specificUser) {
+        const payload = { user: user };
+        payload[specificUserKey] = specificUser;
+
+        console.log('Payload being sent:', payload); // Log para depuração
+
+        fetch('http://localhost:8081/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = '/login';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    function buscarNomeEmpresa() {
+        const cnpj = document.getElementById("cnpj").value.trim();
+        if (cnpj === "") {
+            alert("Por favor, digite um CNPJ válido.");
+            return;
+        }
+        document.getElementById("resultado").textContent = "Buscando...";
+        obterNomeEmpresa(cnpj)
+            .then(nome => {
+                const resultado = document.getElementById("resultado");
+                if (nome) {
+                    resultado.textContent = nome;
+                } else {
+                    resultado.textContent = "Empresa não encontrada.";
+                }
+            });
+    }
+
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    }
+
+    document.getElementById("cnpj").addEventListener("input", debounce(buscarNomeEmpresa, 1000));
+
+    $(document).ready(function () {
+        $('#cel').mask('(00) 00000-0000'); // Máscara para números de celular brasileiros
+        $('#cpf').mask('000.000.000-00', { reverse: true }); // Máscara para CPF
+        $('#cnpj').mask('00.000.000/0000-00', { reverse: true }); // Máscara para CNPJ
+    });
 });
