@@ -5,7 +5,9 @@ const UsuarioMusico = require('../models/tb_usuario_musico');
 // Função para registrar um novo usuário
 
 async function registerUser(req, res) {
-  const { birthDate, email, flagUserType, gender, musicalGenre, name, password, telephone, userMusician } = req.body;
+  const { birthDate, email, flagUserType, gender, musicalGenre, name, password, telephone } = req.body.user;
+  const { userMusician } = req.body; // Isso permanece igual se esta chave está fora do 'user'
+  
   
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
