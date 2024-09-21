@@ -1,0 +1,28 @@
+    <link href="/css/styl-login.css" rel="stylesheet" type="text/css">
+    <script src="/script/Connection.js"></script>
+
+    <div class="main-login">
+        <div class="left-login">
+            <a href="/"><img src="../ARCHIVES/image/Icaros-branco.png" class="left-login-image"></a>
+            <h1>Desperte e voe até o Sol,<br>
+            venha fazer parte.</h1>
+        </div>
+        <div class="right-login">
+            <div class="card-login">
+                <h1>LOGIN</h1>
+                <form action="">
+                    <div class="text-field">
+                        <input type="email" name="email" id="email" placeholder="Email" required title="Digite seu email">
+                    </div>
+                    <div class="text-field">
+                      <input type="password" name="pswd" id="senha" placeholder="Password" required title="Digite sua senha">
+                        <a class="pswd-bttn" type="button" id="toggleSenha" onclick="togglePasswordVisibility()">Mostrar Senha</a>
+                    </div>
+                </form>
+                    <div class="card-bttn">
+                        <button class="bttn-login" type="button" onclick="loginUser()">Login</button>
+                        <a class="bttn-signin" href="/signin">Cadastre-se</a>
+                    </div>
+            </div>
+        </div>
+    

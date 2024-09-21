@@ -1,0 +1,185 @@
+<link rel="stylesheet" href="/css/styl-signin.css" type="text/css">
+<title>Cadastro de Usuário</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="/script/signin.js"></script>
+
+<div class="tudo">
+    <div class="signin">
+        <div class="left-signin">
+            <a href="/"><img src="../ARCHIVES/image/Icaros-branco.png" class="left-login-image"></a>
+            <h1>Desperte e voe até o Sol,<br>
+                venha fazer parte.</h1>
+        </div>
+        <div class="right-signin" id="signin">
+            <form id="CadastroForm" action="" class="signin-form">
+                <h2>CADASTRO</h2>
+                <input type="text" id="name" name="name" placeholder="Nome Completo" required title="Digite seu Nome">
+                <input type="email" id="email" name="email" placeholder="Email" required title="Digite seu Email">
+                <input type="password" id="password" name="psw" placeholder="Password" required
+                    title="Escolha uma senha">
+                <input type="password" id="csenha" name="cpsw" placeholder="Confirm password" required
+                    title="Confirme sua Senha">
+                <input type="date" id="birthDate" name="brthdt" required placeholder="Data de nascimento"
+                    title="Digite sua data de nascimento">
+                <input type="tel" id="cel" name="pnum" placeholder="Phone number" required
+                    title="Digite seu Telefone (DDD-Número)">
+                <div class="dropdown-signin">
+                    <div class="sexo-gender">
+                        <div class="select-sexo">
+                            <label for="sexo">Sexo</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Selecione...</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="dropdown-gender">
+                            <div id="generoField" class="select-genero">
+                                <label for="generoMusical">Estilo</label>
+                                <select id="generoMusical" name="generoMusical" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="Rock">Rock</option>
+                                    <option value="Sertanejo">Sertanejo</option>
+                                    <option value="Pop">Pop</option>
+                                    <option value="Hip_Hop">Hip Hop</option>
+                                    <option value="Jazz">Jazz</option>
+                                    <option value="Blues">Blues</option>
+                                    <option value="Classical">Classical</option>
+                                    <option value="Electronic_Dance_Music">Electronic Dance Music</option>
+                                    <option value="Country">Country</option>
+                                    <option value="Reggae">Reggae</option>
+                                    <option value="Funk">Funk</option>
+                                    <option value="Disco">Disco</option>
+                                    <option value="Gospel">Gospel</option>
+                                    <option value="Todos">Todos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="select-sou">
+                    <label for="sou">Sou</label>
+                    <select id="flagUserType" name="flagTipoUsuario" required>
+                        <option value="">Selecione...</option>
+                        <option value=1>Músico</option>
+                        <option value=3>Produtor Musical</option>
+                        <option value=2>Amante da Música</option>
+                    </select>
+                </div>
+                <div id="cpfField" style="display: none;" class="Field">
+                    <label for="cpf">CPF:</label>
+                    <div>
+                        <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" title="Digite seu CPF">
+                    </div>
+                </div>
+                <div id="cnpjField" style="display: none;" class="Field">
+                    <label for="cnpj">CNPJ:</label>
+                    <div>
+                        <p id="resultado"></p>
+                        <input type="text" id="cnpj" name="cnpj" placeholder="Digite seu CNPJ" title="Digite seu CNPJ">
+                    </div>
+                </div>
+                <input type="submit" value="Confirm">
+            </form>
+            <p>
+                Já possui cadastro? <a class="hiperlink" href="/login">Clique aqui.</a>
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const select = document.getElementById('flagUserType');
+        const cpfField = document.getElementById('cpfField');
+        const cnpjField = document.getElementById('cnpjField');
+        const cpfInput = document.getElementById('cpf');
+        const cnpjInput = document.getElementById('cnpj');
+        const generoField = document.getElementById('generoField');
+        const generoInput = document.getElementById('generoMusical');
+        const form = document.getElementById('CadastroForm');
+
+        function mostrarOpcao() {
+            cpfField.style.display = 'none';
+            cnpjField.style.display = 'none';
+            cpfInput.required = false;
+            cnpjInput.required = false;
+            generoInput.required = false;
+
+            if (select.value == 1) {
+                cpfField.style.display = 'block';
+                cpfInput.required = true;
+            } else if (select.value == 2) {
+                cpfField.style.display = 'block';
+                cpfInput.required = true;
+                generoInput.required = true;
+            } else if (select.value == 3) {
+                cnpjField.style.display = 'block';
+                cnpjInput.required = true;
+            }
+        }
+
+        select.addEventListener('change', mostrarOpcao);
+        mostrarOpcao();
+    });
+
+    // Função para realizar a requisição à API da BrasilAPI
+    async function obterNomeEmpresa(cnpj) {
+        const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            const data = await response.json();
+
+            if (data.error) {
+                throw new Error(data.message);
+            }
+
+            return data.razao_social; // Retorna o nome da empresa
+        } catch (error) {
+            console.error("Erro ao obter nome da empresa:", error);
+            return null;
+        }
+    }
+
+    // Função para buscar o nome da empresa e atualizar o DOM
+    function buscarNomeEmpresa() {
+        const cnpj = document.getElementById("cnpj").value.trim();
+        if (cnpj === "") {
+            alert("Por favor, digite um CNPJ válido.");
+            return;
+        }
+        document.getElementById("resultado").textContent = "Buscando...";
+        obterNomeEmpresa(cnpj)
+            .then(nome => {
+                const resultado = document.getElementById("resultado");
+                if (nome) {
+                    resultado.textContent = nome;
+                } else {
+                    resultado.textContent = "Empresa não encontrada.";
+                }
+            });
+    }
+
+    // Função para detectar quando o usuário termina de digitar
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    }
+
+    document.getElementById("cnpj").addEventListener("input", debounce(buscarNomeEmpresa, 1000));
+
+    $(document).ready(function () {
+        $('#cel').mask('(00) 00000-0000'); // Máscara para números de celular brasileiros
+        $('#cpf').mask('000.000.000-00', { reverse: true }); // Máscara para CPF
+        $('#cnpj').mask('00.000.0000000-00', { reverse: true }); // Máscara para CNPJ
+    });
+</script>
