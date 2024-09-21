@@ -17,6 +17,22 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+.informacoes{
+    color: #f0f0f0;
+    text-align: center;
+    font-size: 12pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ECD182;
+    margin-top: 2px;
+}
+
 .cabecalho img {
     width: 3vw;
     height: auto;

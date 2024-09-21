@@ -140,7 +140,9 @@ textarea{
     gap: 10px;
 }
 .form-perfil input[type="submit"] {
+    width: 25rem;
     margin-top: 15px;
+    font-size: 15pt;
     font-weight: 800;
     background-color: #f0f0f0;
     color: #0f0f0f;
