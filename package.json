@@ -1,9 +1,6 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.1.1",
-=======
->>>>>>> ff5f0b03cbf403e8cfc8a484f8b5c3ecc3ee7b5b
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "express-handlebars": "^8.0.1",
