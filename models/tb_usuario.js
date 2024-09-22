@@ -44,7 +44,12 @@ const Usuario = sequelize.define('Usuario', {
       'Funk', 'Disco', 'Gospel', 'Todos'
     ),
     allowNull: false
+  },
+  NovoUsuario: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
   }
+
 }, {
   tableName: 'tb_usuario',
   timestamps: false, // Remove createdAt e updatedAt

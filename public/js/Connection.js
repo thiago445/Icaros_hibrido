@@ -40,14 +40,14 @@ async function loginUser() {
             if (userResponse.ok) {
                 const userDetails = await userResponse.json();
                 const userType = userDetails.userType;
-
+                const NewUser = userDetails.newUser;
                 // Redirecionamento baseado no tipo de usuário
                 if (userType === 1) {
-                    handleMusicianRedirect();
+                    handleMusicianRedirect(NewUser);
                 } else if (userType === 2) {
-                    handleLoverRedirect();
-                }else if (userType === 3) {
-                    handleProductorRedirect();
+                    handleLoverRedirect(NewUser);
+                } else if (userType === 3) {
+                    handleProductorRedirect(NewUser);
                 }
             } else {
                 console.error('Erro ao obter detalhes do usuário');
@@ -62,26 +62,44 @@ async function loginUser() {
     }
 }
 
-function handleMusicianRedirect() {
+function handleMusicianRedirect(NewUser) {
+    if (NewUser) {
+        window.setTimeout(() => {
+            window.location.href = '/attMusico';
+        }, 2000);
+    } else {
+        window.setTimeout(() => {
+            window.location.href = '/portifolio-musico';
+        }, 2000);
+    }
     // Adapte o URL para o redirecionamento desejado
-    window.setTimeout(() => {
-        window.location.href = '/attMusico';
-    }, 2000);
+
 }
 
-function handleLoverRedirect() {
-    // Adapte o URL para o redirecionamento desejado
-    window.setTimeout(() => {
-        window.location.href = '/attAm';
-    }, 2000);
+function handleLoverRedirect(NewUser) {
+    if (NewUser) {
+        window.setTimeout(() => {
+            window.location.href = '/attAm';
+        }, 2000);
+    } else {
+        window.setTimeout(() => {
+            window.location.href = '/portifolio-am';
+        }, 2000);
+    }
 }
 
 
-function handleProductorRedirect() {
+function handleProductorRedirect(NewUser) {
     // Adapte o URL para o redirecionamento desejado
-    window.setTimeout(() => {
-        window.location.href = '/attProdutor';
-    }, 2000);
+    if (NewUser === true) {
+        window.setTimeout(() => {
+            window.location.href = '/attProdutor';
+        }, 2000);
+    } else {
+        window.setTimeout(() => {
+            window.location.href = '/portifolio-produtor';
+        }, 2000);
+    }
 }
 
 function showToast(id) {

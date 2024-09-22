@@ -19,7 +19,7 @@ router.get('/tipeUser', authenticateToken, async (req, res) => {
         }
 
         // Vamos supor que flag_tipo_usuario indica o tipo de usuário
-        res.json({ userType: usuario.flag_tipo_usuario });
+        res.json({ userType: usuario.flag_tipo_usuario, newUser: usuario.NovoUsuario});
     } catch (error) {
         console.error('Erro ao buscar detalhes do usuário:', error);
         res.status(500).json({ error: 'Erro ao buscar detalhes do usuário' });
