@@ -11,127 +11,77 @@ function togglePasswordVisibility() {
     }
 }
 
-async function getUserFlag(token) {
-    if (!token) {
-        throw new Error('Token não encontrado.');
-    }
-
-    const response = await fetch('http://localhost:8080/user/flagUser', { // Substitua pelo seu endpoint real
-        method: 'GET',
-        headers: {
-            'Authorization': token // Adiciona o token ao cabeçalho da requisição
-        }
-    });
-
-    if (response.ok) {
-        const userDetails = await response.json(); // Obtém o JSON da resposta
-        return userDetails;
-    } else {
-        throw new Error('Erro ao obter os detalhes do usuário amante de musica.');
-    }
-}
-  
-
-async function getUserLoverDetails(token) {
-        if (!token) {
-            throw new Error('Token não encontrado.');
-        }
-    
-        const response = await fetch('http://localhost:8080/user/lover/profileLover', { // Substitua pelo seu endpoint real
-            method: 'GET',
-            headers: {
-                'Authorization': token // Adiciona o token ao cabeçalho da requisição
-            }
-        });
-    
-        if (response.ok) {
-            const userDetails = await response.json(); // Obtém o JSON da resposta
-            return userDetails;
-        } else {
-            throw new Error('Erro ao obter os detalhes do usuário musico.');
-        }
-    }
-
-
 async function loginUser() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("senha").value;
 
-    console.log(email, password);
-    const response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: new Headers({
-            "Content-Type": "application/json; charset=utf8",
-            accept: "application/json"
-        }),
-        body: JSON.stringify({
-            email: email,
-            password: password
-        }),
-    });
+    try {
+        const response = await fetch('http://localhost:8081/auth/login', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            credentials: 'include' // Necessário para enviar cookies de sessão
+        });
 
-    let key = "Authorization";
-    let token = response.headers.get(key);
-    window.localStorage.setItem(key, token);
+        if (response.ok) {
+            showToast("#okToast");
 
-    if (response.ok) {
-        showToast("#okToast");
+            // Após login, obtenha detalhes adicionais do usuário
+            const userResponse = await fetch('http://localhost:8081/prot/tipeUser', {
+                method: 'GET',
+                credentials: 'include'
+            });
 
-        try {
-           
-            const userDetailsToken = await getUserFlag(token);
-           
+            if (userResponse.ok) {
+                const userDetails = await userResponse.json();
+                const userType = userDetails.userType;
 
-            const userType = userDetailsToken;
-            console.log('Tipo de usuário:', userType);
-
-            if (userType === 1) {
-                const portfolioResponse = await fetch('http://localhost:8080/user/profile/musician', {
-                    headers: new Headers({
-                        "Authorization": token
-                    })
-                });
-
-                if (portfolioResponse.status === 204) { // No Content
-                  
-                    window.setTimeout(function () {
-                        window.location.href = '../attMUSICO/attMUSICO.html';
-                    }, 2000);
-                } else if (portfolioResponse.ok) {
-                
-                    window.setTimeout(function () {
-                        window.location.href = '../portMUSICO/portifolio-musico.html';
-                    }, 2000);
-                } else {
-                    throw new Error('Erro ao verificar o portfólio do músico');
+                // Redirecionamento baseado no tipo de usuário
+                if (userType === 1) {
+                    handleMusicianRedirect();
+                } else if (userType === 2) {
+                    handleLoverRedirect();
+                }else if (userType === 3) {
+                    handleProductorRedirect();
                 }
-            }if (userType === 2) {
-
-                
-                  
-                  const userDetails = await getUserLoverDetails(token);
-                  const comment = userDetails.comment;
-
-                if(comment){
-                        alert('Redirecionando para a página de perfil amante musico...');
-                    window.setTimeout(function () {
-                        window.location.href = '../portAM/portifolio-AM.html';
-                    }, 2000);    
-                }else{
-                    alert('Perfil amante muisco Incompleto. Redirecionando para a página de Criação de perfil...');
-                    window.setTimeout(function () {
-                        window.location.href = '../attAM/attAM.html';
-                    }, 2000);
-                }
-                    
+            } else {
+                console.error('Erro ao obter detalhes do usuário');
+                showToast("#errorToast");
             }
-        } catch (error) {
-            console.error('Erro ao obter tipo de usuário:', error);
+        } else {
             showToast("#errorToast");
         }
-    } else {
+    } catch (error) {
+        console.error('Erro durante o login:', error);
         showToast("#errorToast");
     }
+}
+
+function handleMusicianRedirect() {
+    // Adapte o URL para o redirecionamento desejado
+    window.setTimeout(() => {
+        window.location.href = '/attMusico';
+    }, 2000);
+}
+
+function handleLoverRedirect() {
+    // Adapte o URL para o redirecionamento desejado
+    window.setTimeout(() => {
+        window.location.href = '/attAm';
+    }, 2000);
+}
+
+
+function handleProductorRedirect() {
+    // Adapte o URL para o redirecionamento desejado
+    window.setTimeout(() => {
+        window.location.href = '/attProdutor';
+    }, 2000);
 }
 
 function showToast(id) {
