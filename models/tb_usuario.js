@@ -45,6 +45,10 @@ const Usuario = sequelize.define('Usuario', {
     ),
     allowNull: false
   },
+  confirmationToken: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
   NovoUsuario: {
     type: Sequelize.BOOLEAN,
     defaultValue: true,

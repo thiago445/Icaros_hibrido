@@ -113,9 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function enviarDados(user, specificUserKey, specificUser) {
         const payload = { user: user };
         payload[specificUserKey] = specificUser;
-
-        console.log('Payload being sent:', payload); // Log para depuração
-
+        console.log(payload);
         fetch('http://localhost:8081/auth/register', {
             method: 'POST',
             headers: {
