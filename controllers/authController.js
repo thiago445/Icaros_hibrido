@@ -107,4 +107,68 @@ async function loginUser(req, res) {
   }
 }
 
-module.exports = { registerUser, loginUser };
+async function confirm(req, res) {
+  const { token } = req.query;
+
+  try {
+    const usuario = await Usuario.findOne({ where: { confirmationToken: token } });
+
+    if (!usuario) {
+      return res.status(400).send('Token inválido.');
+    }
+
+    usuario.confirmationToken = null; // Remove o token após confirmação
+    await usuario.save();
+
+    const jwtToken = jwt.sign({ id: usuario.ID_USUARIO }, secretKey, { expiresIn: '10h' });
+    res.cookie('jwt', jwtToken, COOKIE_OPTIONS);
+
+    res.send(`
+      <h1>Email registrado com sucesso!</h1>
+      <p>Você será redirecionado para sua página em breve...</p>
+      <script>
+          setTimeout(() => {
+              window.location.href = '/prot/redirect'; // Altere para sua rota de dashboard do usuário
+          }, 3000);
+      </script>
+      `);
+  } catch (error) {
+    console.error('Erro ao confirmar e-mail:', error);
+    res.status(500).send('Erro ao confirmar e-mail.');
+  }
+};
+
+async function redirect(req, res) {
+  try {
+    const usuario = await Usuario.findByPk(req.user.id);
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    const userType = usuario.flag_tipo_usuario;
+
+    switch (userType) {
+      case 1:
+        res.redirect('/attMusico');
+
+        break;
+      case 2:
+        res.redirect('/attProdutor');
+
+        break;
+      case 3:
+        res.redirect('/attAm');
+
+        break;
+      default:
+        console.log('Tipo de usuário desconhecido');
+    }
+
+
+  } catch (error) {
+    console.error('Erro ao buscar detalhes do usuário:', error);
+    res.status(500).json({ error: 'Erro ao buscar detalhes do usuário' });
+  }
+
+}
+
+module.exports = { registerUser, loginUser, confirm, redirect };

@@ -1,6 +1,7 @@
 const express = require('express');
 const authenticateToken = require('../middleware/auth');
 const Usuario = require('../models/tb_usuario');
+const {redirect} =require('../controllers/authController');
 const router = express.Router();
 
 // Exemplo de rota protegida
@@ -25,5 +26,10 @@ router.get('/tipeUser', authenticateToken, async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar detalhes do usuário' });
     }
 });
+
+router.get('/redirect',authenticateToken, redirect);
+
+
+
 
 module.exports = router;
