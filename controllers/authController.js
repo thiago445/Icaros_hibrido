@@ -152,11 +152,11 @@ async function redirect(req, res) {
 
         break;
       case 2:
-        res.redirect('/attProdutor');
-
+        res.redirect('/attAm');
+        
         break;
       case 3:
-        res.redirect('/attAm');
+        res.redirect('/attProdutor');
 
         break;
       default:
