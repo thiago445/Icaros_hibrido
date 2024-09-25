@@ -1,3 +1,4 @@
+
 function togglePasswordVisibility() {
     var passwordField = document.getElementById("senha");
     var passwordToggle = document.getElementById("toggleSenha");
@@ -31,28 +32,7 @@ async function loginUser() {
         if (response.ok) {
             showToast("#okToast");
 
-            // Após login, obtenha detalhes adicionais do usuário
-            const userResponse = await fetch('http://localhost:8081/prot/tipeUser', {
-                method: 'GET',
-                credentials: 'include'
-            });
-
-            if (userResponse.ok) {
-                const userDetails = await userResponse.json();
-                const userType = userDetails.userType;
-                const NewUser = userDetails.newUser;
-                // Redirecionamento baseado no tipo de usuário
-                if (userType === 1) {
-                    handleMusicianRedirect(NewUser);
-                } else if (userType === 2) {
-                    handleLoverRedirect(NewUser);
-                } else if (userType === 3) {
-                    handleProductorRedirect(NewUser);
-                }
-            } else {
-                console.error('Erro ao obter detalhes do usuário');
-                showToast("#errorToast");
-            }
+            window.location.href = '/prot/redirect'
         } else {
             showToast("#errorToast");
         }

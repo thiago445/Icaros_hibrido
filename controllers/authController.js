@@ -145,15 +145,33 @@ async function redirect(req, res) {
       return res.status(404).json({ error: 'Usuário não encontrado' });
     }
     const userType = usuario.flag_tipo_usuario;
+    const NewUser = usuario.NovoUsuario;
 
+    if (!NewUser) {
+      switch (userType) {
+        case 1:
+          res.redirect('/portifolio-musico');
+          break;
+        case 2:
+          res.redirect('/portifolio-AM');
+          break;
+        case 3:
+          res.redirect('/portifolio-produtor');
+
+          break;
+        default:
+          console.log('Tipo de usuário desconhecido');
+      }
+    }
     switch (userType) {
       case 1:
+
         res.redirect('/attMusico');
 
         break;
       case 2:
         res.redirect('/attAm');
-        
+
         break;
       case 3:
         res.redirect('/attProdutor');
