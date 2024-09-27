@@ -97,8 +97,14 @@ async function loginUser(req, res) {
       return res.status(401).json({ error: 'Senha incorreta' });
     }
 
-    const token = jwt.sign({ id: usuario.ID_USUARIO }, secretKey, { expiresIn: '10h' });
-    res.cookie('jwt', token, COOKIE_OPTIONS);
+    
+    const jwtToken = jwt.sign(
+      { id: usuario.ID_USUARIO, userType: usuario.flag_tipo_usuario },
+      secretKey,
+      { expiresIn: '10h' }
+    );
+    res.cookie('jwt', jwtToken, COOKIE_OPTIONS);
+
 
     res.status(200).json({ message: 'Login bem-sucedido', usuario });
   } catch (error) {
@@ -120,7 +126,11 @@ async function confirm(req, res) {
     usuario.confirmationToken = null; // Remove o token após confirmação
     await usuario.save();
 
-    const jwtToken = jwt.sign({ id: usuario.ID_USUARIO }, secretKey, { expiresIn: '10h' });
+    const jwtToken = jwt.sign(
+      { id: usuario.ID_USUARIO, userType: usuario.flag_tipo_usuario },
+      secretKey,
+      { expiresIn: '10h' }
+    );
     res.cookie('jwt', jwtToken, COOKIE_OPTIONS);
 
     res.send(`

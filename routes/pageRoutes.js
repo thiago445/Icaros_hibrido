@@ -1,3 +1,4 @@
+const authenticateToken = require('../middleware/auth');
 const express = require('express')
 const router = express.Router();
 
@@ -13,15 +14,28 @@ router.get('/signin', function (req, res) {
     res.render('SIGNIN');
 });
 
-router.get('/attAm', function (req, res) {
+router.get('/attAm', authenticateToken, function (req, res) {
+    if (req.user.flagtype !== 2) {
+        return res.status(403).json({ error: 'Acesso negado: somente Amantes da Musica' });
+    }
+
     res.render('attAM');
 });
 
-router.get('/attMusico', function (req, res) {
+router.get('/attMusico', authenticateToken, function (req, res) {
+    flagtyp = req.user.flagtype;
+    if (flagtyp !== 1) {
+        return res.status(403).json({ error: 'Acesso negado: somente músicos '+req.user.flagtype });
+    }
     res.render('attMUSICO');
+
 });
 
-router.get('/attProdutor', function (req, res) {
+router.get('/attProdutor', authenticateToken, function (req, res) {
+    flagtype = req.user.flagtype;
+    if (flagtype !== 3) {
+        return res.status(403).json({ error: 'Acesso negado: somente Produtores' });
+    }
     res.render('attPRODUTOR');
 });
 
@@ -29,15 +43,24 @@ router.get('/confirm', function (req, res) {
     res.render('confirm');
 });
 
-router.get('/portifolio-am', function (req, res) {
+router.get('/portifolio-am', authenticateToken, function (req, res) {
+    if (req.user.flagtype !== 2) {
+        return res.status(403).json({ error: 'Acesso negado: somente Amantes da musica' });
+    }
     res.render('portifolio-AM');
 });
 
-router.get('/portifolio-musico', function (req, res) {
+router.get('/portifolio-musico', authenticateToken, function (req, res) {
+    if (req.user.flagtype !== 1) {
+        return res.status(403).json({ error: 'Acesso negado: somente músicos' });
+    }
     res.render('portifolio-musico');
 });
 
-router.get('/portifolio-produtor', function (req, res) {
+router.get('/portifolio-produtor', authenticateToken, function (req, res) {
+    if (req.user.flagtype !== 3) {
+        return res.status(403).json({ error: 'Acesso negado: somente Produtores' });
+    }
     res.render('portifolio-produtor');
 });
 
