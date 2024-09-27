@@ -1,4 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const BASE_URL = document.getElementById('config').getAttribute('data-base-url');
     const form = document.getElementById('CadastroForm');
     const select = document.getElementById('flagUserType');
     const cpfField = document.getElementById('cpfField');
@@ -8,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const generoInput = document.getElementById('generoMusical');
 
     if (form) {
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function (event) {
             event.preventDefault();
 
             const user = {
@@ -86,54 +91,54 @@ document.addEventListener('DOMContentLoaded', function() {
     async function obterNomeEmpresa(cnpj) {
         // Remover caracteres especiais e deixar apenas números
         const cnpjFormatado = cnpj.replace(/[^\d]+/g, '');
-    
+
         const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpjFormatado}`;
-    
+
         try {
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Erro na requisição');
             }
             const data = await response.json();
-            
+
             // Log para depuração da resposta
             console.log('Dados retornados:', data);
-    
+
             if (data.error) {
                 throw new Error(data.message);
             }
-    
+
             return data.razao_social; // Retorna o nome da empresa
         } catch (error) {
             console.error("Erro ao obter nome da empresa:", error);
             return null;
         }
     }
-    
+
     function enviarDados(user, specificUserKey, specificUser) {
         const payload = { user: user };
         payload[specificUserKey] = specificUser;
         console.log(payload);
-        fetch('http://localhost:8081/auth/register', {
+        fetch(`${BASE_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            window.location.href = '/login';
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                window.location.href = '/login';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     function buscarNomeEmpresa() {

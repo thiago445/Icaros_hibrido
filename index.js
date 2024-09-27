@@ -18,6 +18,13 @@ app.use(session({
     cookie: { secure: false } // Colocar true em produção
 }));
 
+//base url para quando tiver dominio
+app.use((req, res, next) => {
+    res.locals.baseUrl = process.env.API_BASE_URL || 'http://localhost:8081';
+    next();
+  });
+    
+
 app.use(cookieParser());
 
 // Configuração do Handlebars

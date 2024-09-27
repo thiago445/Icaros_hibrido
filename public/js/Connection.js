@@ -1,3 +1,4 @@
+const BASE_URL = document.getElementById('config').getAttribute('data-base-url');
 
 function togglePasswordVisibility() {
     var passwordField = document.getElementById("senha");
@@ -17,7 +18,7 @@ async function loginUser() {
     let password = document.getElementById("senha").value;
 
     try {
-        const response = await fetch('http://localhost:8081/auth/login', {
+        const response = await fetch(`${BASE_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json',
