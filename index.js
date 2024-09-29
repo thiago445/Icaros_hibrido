@@ -42,8 +42,10 @@ app.use('/script', express.static('public/js'));
 const pageRoutes = require('./routes/pageRoutes');
 const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
+const profileRoutes = require('./routes/protectedRoutes/profilesRoutes')
 
 app.use('/prot', protectedRoutes);
+app.use('/profile', profileRoutes);
 app.use('/', pageRoutes);
 app.use('/auth', authRoutes);
 
