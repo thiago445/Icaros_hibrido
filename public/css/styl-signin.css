@@ -122,13 +122,13 @@ p {
 .dropdown-gender{
     margin-top: 0px;
     display: flex;
-    width: 100%;
     align-items: center;
     justify-content: center;
 }
 .select-sou{
-    margin-bottom: 2%;
+    margin-bottom: 3%;
     text-align: center;
+    justify-content: center;
     flex-direction: column;
     display: flex;
 }
@@ -148,16 +148,26 @@ p {
 .right-signin button{
     height: 5vh;
     width: 7vw;
-    margin-top: 12px;
-    background-color: #7f7f7f;
+    margin-top: 5%;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0px;
+    color:#0f0f0f;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    box-shadow: 0px 10px 40px -12px #000;
 }
-.right-signin button[type="button"]:hover {
+.right-signin button[type="submit"]:hover {
     background-color: #ecd182;
     box-shadow: #f0f0f0;
     color: #0f0f0f;
     box-shadow: 0px 0px 25px -12px #fff;
+}
+.input-error{
+    
 }
 .hiperlink{
     text-align: center;
@@ -254,8 +264,25 @@ p {
         box-sizing: content-box;
         margin-top: 4%;
     }
-    .right-signin button[type="button"]:hover {
+    .right-signin button{
+        height: 5vh;
+        width: 7vw;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 0px;
+        color:#0f0f0f;
+        background-color: #f0f0f0;
+        cursor: pointer;
+        box-shadow: 0px 10px 40px -12px #000;
+    }
+    .right-signin button[type="submit"]:hover {
         background-color: #ecd182;
+        box-shadow: #f0f0f0;
+        color: #0f0f0f;
+        box-shadow: 0px 0px 25px -12px #fff;
     }
     option{
         background-color: #2f2f2f;
@@ -306,11 +333,10 @@ p {
         justify-content: center;
     }
     .select-sou{
-        gap: 3%;
-        margin-top: 5%;
-        margin-bottom: 1%;
+        margin-bottom: 3%;
         text-align: center;
-        flex-direction: row;
+        justify-content: center;
+        flex-direction: column;
         display: flex;
     }
     .select-sou select{

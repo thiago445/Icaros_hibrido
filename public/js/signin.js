@@ -177,3 +177,20 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#cnpj').mask('00.000.000/0000-00', { reverse: true }); // Máscara para CNPJ
     });
 });
+
+$(document).ready(function () { 
+    $('#CadastroForm').on('submit', function (event) {
+        var password = $('#password').val(); 
+        var confirmPassword = $('#csenha').val(); 
+        
+        if (password !== confirmPassword) {
+            // Adiciona a classe CSS
+            $('#password').addClass('input-error');
+            $('#csenha').addClass('input-error');
+            $('#csenha').val(''); // Limpa o campo de confirmação
+            event.preventDefault(); // Impede o envio do formulário 
+        } 
+    }); 
+});
+
+
