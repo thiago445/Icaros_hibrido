@@ -1,7 +1,6 @@
 const express = require('express');
-const { registerUser, loginUser, confirm } = require('../controllers/authController');
+const { registerUser, loginUser, confirm, reenviarEmail } = require('../controllers/authController');
 const { setMaxParserCache } = require('mysql2');
-
 
 const router = express.Router();
 
@@ -10,7 +9,7 @@ router.post('/register', registerUser);
 
 // Define a rota para login de usuários
 router.post('/login', loginUser);
-
-router.get('/confirm', confirm);
+    
+router.post('/reenviar-email', reenviarEmail);
 
 module.exports = router;

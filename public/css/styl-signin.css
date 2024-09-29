@@ -167,7 +167,13 @@ p {
     box-shadow: 0px 0px 25px -12px #fff;
 }
 .input-error{
-    
+    border: 2px solid red;
+    background-color: #ffcccc;
+}
+.error-message{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }
 .hiperlink{
     text-align: center;

@@ -317,5 +317,95 @@ async function redirect(req, res) {
   }
 
 }
+async function reenviarEmail(req, res) {
+  const { email } = req.body;
 
-module.exports = { registerUser, loginUser, confirm, redirect };
+  try {
+    const usuario = await Usuario.findOne({ where: { EMAIL: email } });
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    const confirmationToken = crypto.randomBytes(20).toString('hex');
+    usuario.confirmationToken = confirmationToken; // Define um novo token
+    await usuario.save();
+
+    // Envia o e-mail com o novo token
+    await sendEmail(
+      email,
+      'Confirmação de Cadastro',
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  background-color: #f9f9f9;
+                  margin: 0;
+                  padding: 0;
+                  color: #333;
+              }
+              .container {
+                  max-width: 600px;
+                  margin: 30px auto;
+                  background-color: #ffffff;
+                  padding: 20px;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                  text-align: center;
+              }
+              .header img {
+                  width: 50px;
+                  height: auto;
+                  margin-bottom: 20px;
+              }
+              .content {
+                  line-height: 1.6;
+              }
+              .button {
+                  display: inline-block;
+                  margin: 20px 0;
+                  padding: 10px 20px;
+                  color: #ffffff;
+                  background-color: #007bff;
+                  text-decoration: none;
+                  border-radius: 5px;
+                  font-weight: bold;
+              }
+              .footer {
+                  margin-top: 20px;
+                  font-size: 12px;
+                  color: #888;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="container">
+              <div class="header">
+                  <img src="https://via.placeholder.com/50" alt="Logo">
+              </div>
+              <div class="content">
+                  <h1>Confirmação de Cadastro</h1>
+                  <p>Obrigado por se cadastrar! Clique no botão abaixo para confirmar seu e-mail.</p>
+                  <a href="http://localhost:8081/auth/confirm?token=${confirmationToken}" class="button">Confirmar E-mail</a>
+              </div>
+              <div class="footer">
+                  <p>Se você não requisitou este e-mail, por favor, ignore.</p>
+              </div>
+          </div>
+      </body>
+      </html>
+      `
+    );
+
+    res.status(200).json({ message: 'E-mail de confirmação reenviado com sucesso.' });
+  } catch (error) {
+    console.error('Erro ao reenviar e-mail:', error);
+    res.status(500).json({ error: 'Erro ao reenviar e-mail.' });
+  }
+}
+
+module.exports = { registerUser, loginUser, confirm, redirect, reenviarEmail };
