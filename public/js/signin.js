@@ -127,15 +127,41 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Erro na rede');
-            return response.json();
-        })
-        .then(() => {
-            // Remova essa linha:
-            // localStorage.removeItem('email'); // Não remova o e-mail aqui
-            window.location.href = '/autenticacao';
-        })
-        .catch(error => console.error('Erro:', error));
-    }    
+            .then(response => {
+                if (!response.ok) throw new Error('Erro na rede');
+                return response.json();
+            })
+            .then(() => {
+                reenviar();
+            })
+            .catch(error => console.error('Erro:', error));
+    }
+
+    async function reenviar() {
+        const email = document.getElementById('email').value;
+        console.log(email);
+
+            fetch(`${BASE_URL}/auth/autentic`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                }),
+                credentials: 'include' // Necessário para enviar cookies de sessão
+            })
+            
+                .then(response => {
+                    if (!response.ok) throw new Error('Erro em salvar email no baguio');
+                    return;
+                    console.log('eu sei que ta aqui')
+                })
+                .then(() => {
+                    window.location.href= '/autenticacaoa'
+                })
+                .catch(error => console.error('Erro:', error));
+
+    }
 });
+

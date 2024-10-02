@@ -12,4 +12,12 @@ router.post('/login', loginUser);
     
 router.post('/reenviar-email', reenviarEmail);
 
+
+router.post('/autentic', function (req, res) {
+    const {email} = req.body;
+    console.log('esse é o email que ta na rota: ' ,email);
+    res.cookie('email', email);
+    res.redirect('/autenticacaoa');
+});
+
 module.exports = router;
