@@ -1,5 +1,6 @@
 <link href="/css/styl-confirm.css" rel="stylesheet" type="text/css">
-<script src="/script/confirm.js"></script>
+<script src="/script/autenticacao.js"></script>
+
 
 <div class="main-login">
     <div class="left-login">
@@ -10,14 +11,13 @@
     <div class="right-login">
         <div class="card-login">
             <h1>AUTENTICAÇÃO</h1>
-            <form action="">
-                <p class="text-field">Foi enviado um codigo para seu email</p>
+            <form id="resend-email-form">
+                <p class="text-field">Foi enviado um código para seu e-mail!</p>
                 <div class="text-field">
-                    <input type="text" name="vcode" id="token" placeholder="Codigo de autenticacao" required
-                        title="Digite seu email">
+                    <p>Caso ainda não tenha recebido, por favor clique no botão abaixo.</p>
                 </div>
                 <div class="card-bttn">
-                    <button class="bttn-login" type="submit" onclick="">Enviar</button>
+                    <button class="bttn-login" type="button" id="authButton">Reenviar E-mail</button>
                 </div>
             </form>
         </div>

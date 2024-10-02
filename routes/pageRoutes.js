@@ -39,9 +39,10 @@ router.get('/attProdutor', authenticateToken, function (req, res) {
     res.render('attPRODUTOR');
 });
 
-router.get('/confirm', function (req, res) {
-    res.render('confirm');
-});
+
+router.get('/autenticacaoa',function(req,res){
+    res.render('autenticacao');
+})
 
 router.get('/portifolio-am', authenticateToken, function (req, res) {
     if (req.user.flagtype !== 2) {
