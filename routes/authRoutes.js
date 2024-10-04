@@ -9,6 +9,8 @@ router.post('/register', registerUser);
 
 // Define a rota para login de usuários
 router.post('/login', loginUser);
+
+router.get('/confirm', confirm)
     
 router.post('/reenviar-email', reenviarEmail);
 
