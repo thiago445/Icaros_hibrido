@@ -6,6 +6,9 @@ const Usuario = require('../models/tb_usuario');
 const UsuarioMusico = require('../models/tb_usuario_musico');
 const UsuarioProdutor = require('../models/tb_usuario_produtor');
 const UsuarioAmanteMusica = require('../models/tb_usuario_am');
+const getConfirmationEmailTemplate = require('../emails/ConfirmationEmailTemplate');
+
+
 
 const secretKey = '4635rfd2o3i5WDsf3241GFLAIh';
 const COOKIE_OPTIONS = {
@@ -68,75 +71,16 @@ async function registerUser(req, res) {
     console.log('User Musician:', userMusician);
     console.log('User Lover:', userLover);
     console.log('Producer User:', producerUser);
+    
+    const emailContent = getConfirmationEmailTemplate(confirmationToken);
+    // const emailSend = getRedirectTemplate(confirmationToken, baseUrl);
+
+
 
     await sendEmail(
       email,
       'Confirmação de Cadastro',
-      `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-              body {
-                  font-family: Arial, sans-serif;
-                  background-color: #f9f9f9;
-                  margin: 0;
-                  padding: 0;
-                  color: #333;
-              }
-              .container {
-                  max-width: 600px;
-                  margin: 30px auto;
-                  background-color: #ffffff;
-                  padding: 20px;
-                  border-radius: 8px;
-                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                  text-align: center;
-              }
-              .header img {
-                  width: 50px;
-                  height: auto;
-                  margin-bottom: 20px;
-              }
-              .content {
-                  line-height: 1.6;
-              }
-              .button {
-                  display: inline-block;
-                  margin: 20px 0;
-                  padding: 10px 20px;
-                  color: #ffffff;
-                  background-color: #007bff;
-                  text-decoration: none;
-                  border-radius: 5px;
-                  font-weight: bold;
-              }
-              .footer {
-                  margin-top: 20px;
-                  font-size: 12px;
-                  color: #888;
-              }
-          </style>
-      </head>
-      <body>
-          <div class="container">
-              <div class="header">
-                  <img src="https://via.placeholder.com/50" alt="Logo">
-              </div>
-              <div class="content">
-                  <h1>Confirmação de Cadastro</h1>
-                  <p>Obrigado por se cadastrar! Clique no botão abaixo para confirmar seu e-mail.</p>
-                  <a href="http://localhost:8081/auth/confirm?token=${confirmationToken}" class="button">Confirmar E-mail</a>
-              </div>
-              <div class="footer">
-                  <p>Se você não requisitou este e-mail, por favor, ignore.</p>
-              </div>
-          </div>
-      </body>
-      </html>
-      `
+      emailContent
     );
 
     console.log('sendEmail:', sendEmail);
@@ -198,68 +142,7 @@ async function confirm(req, res) {
     );
     res.cookie('jwt', jwtToken, COOKIE_OPTIONS);
 
-    res.send(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-              body {
-                  font-family: Arial, sans-serif;
-                  background-color: #f4f4f7;
-                  margin: 0;
-                  padding: 0;
-                  color: #333;
-                  text-align: center;
-              }
-              .container {
-                  max-width: 600px;
-                  margin: 50px auto;
-                  background-color: #fff;
-                  padding: 30px;
-                  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                  border-radius: 8px;
-              }
-              .header {
-                  margin-bottom: 20px;
-              }
-              .header img {
-                  width: 50px;
-                  height: auto;
-              }
-              .content {
-                  line-height: 1.6;
-              }
-              .footer {
-                  margin-top: 30px;
-                  font-size: 12px;
-                  color: #777;
-              }
-          </style>
-      </head>
-      <body>
-          <div class="container">
-              <div class="header">
-                  <img src="https://via.placeholder.com/50" alt="Logo">
-                  <h1>Email Registrado com Sucesso!</h1>
-              </div>
-              <div class="content">
-                  <p>Bem-vindo! Seu email foi registrado com sucesso.</p>
-                  <p>Aguarde, você será redirecionado em breve...</p>
-              </div>
-              <div class="footer">
-                  <p>Se você não for redirecionado automaticamente, <a href="/prot/redirect">clique aqui</a>.</p>
-              </div>
-          </div>
-          <script>
-              setTimeout(() => {
-                  window.location.href = '/prot/redirect';
-              }, 3000);
-          </script>
-      </body>
-      </html>
-  `);
+    res.render('redirect')
 
   } catch (error) {
     console.error('Erro ao confirmar e-mail:', error);

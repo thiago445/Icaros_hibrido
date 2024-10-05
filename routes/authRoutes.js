@@ -4,6 +4,11 @@ const { setMaxParserCache } = require('mysql2');
 
 const router = express.Router();
 
+router.get('/logo', (req, res) => {
+    const imagePath = path.join('/image/Icaros-branco.png'); // ajusta o caminho ao seu contexto real
+    res.sendFile(imagePath);
+});
+
 // Define a rota para registro de usuários
 router.post('/register', registerUser);
 
@@ -11,13 +16,13 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 router.get('/confirm', confirm)
-    
+
 router.post('/reenviar-email', reenviarEmail);
 
 
 router.post('/autentic', function (req, res) {
-    const {email} = req.body;
-    console.log('esse é o email que ta na rota: ' ,email);
+    const { email } = req.body;
+    console.log('esse é o email que ta na rota: ', email);
     res.cookie('email', email);
     res.redirect('/autenticacaoa');
 });
