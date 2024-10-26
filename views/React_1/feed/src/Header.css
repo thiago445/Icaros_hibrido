@@ -1,0 +1,74 @@
+/* src/Header.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinha os itens com espaço entre eles */
+    padding: 10px 20px;
+    background-color: #fff; /* Cor de fundo do header */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    color: #333; /* Cor padrão do ícone e texto */
+    margin-left: 20px; /* Espaçamento à esquerda */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: color 0.3s ease; /* Suaviza a transição de cor */
+}
+
+.profile:hover {
+    color: #0077b5; /* Cor ao passar o mouse */
+}
+
+.profile span {
+    margin-left: 8px; /* Espaço entre ícone e nome */
+}
+
+.logo {
+    font-size: 24px; /* Tamanho da fonte do logo */
+    font-weight: bold; /* Deixar o logo em negrito */
+    margin-right: 20px; /* Espaço entre a logo e a barra de pesquisa */
+}
+
+.search-container {
+    display: flex; /* Mantém a barra de pesquisa flexível */
+    flex-grow: 1; /* Permite que o campo de pesquisa ocupe o espaço disponível */
+    max-width: 400px; /* Largura máxima do campo de pesquisa */
+}
+
+.search-input {
+    width: 100%; /* Largura total do contêiner */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    transition: border-color 0.3s ease; /* Suaviza a transição da cor da borda */
+}
+
+.search-input:focus {
+    border-color: #0077b5; /* Cor da borda ao focar */
+    outline: none; /* Remove contorno padrão */
+}
+
+.nav {
+    display: flex;
+    gap: 15px; /* Espaçamento entre os itens */
+    margin-left: 20px; /* Espaço entre a barra de pesquisa e a navbar */
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    color: #333; /* Cor padrão dos ícones e texto */
+    text-decoration: none; /* Remove sublinhado de links, se houver */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: color 0.3s ease; /* Suaviza a transição de cor */
+}
+
+.nav-item:hover {
+    color: #0077b5; /* Cor ao passar o mouse */
+}
+
+.nav-item span {
+    margin-left: 5px; /* Espaço entre ícone e texto */
+}
