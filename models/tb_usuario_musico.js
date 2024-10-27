@@ -20,10 +20,6 @@ const UsuarioMusico = sequelize.define('UsuarioMusico', {
       key: 'ID_USUARIO'
     }
   },
-  IMAGEM: {
-    type: Sequelize.BLOB('medium'),
-    allowNull: true
-  },
   COMENTARIO: {
     type: Sequelize.TEXT,
     allowNull: true

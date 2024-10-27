@@ -77,7 +77,7 @@ async function registerUser(req, res) {
 
 
 
-    await sendEmail(
+    sendEmail(
       email,
       'Confirmação de Cadastro',
       emailContent

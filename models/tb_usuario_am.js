@@ -26,10 +26,6 @@ const UsuarioAmanteMusica = sequelize.define('UsuarioAmanteMusica', {
             key: 'ID_USUARIO'
         }
     },
-    IMAGEM: {
-        type: Sequelize.BLOB('medium'),
-        allowNull: true
-    }
 }, {
     tableName: 'tb_usuario_am',
     timestamps: false, // Ajuste conforme a necessidade

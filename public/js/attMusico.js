@@ -1,20 +1,12 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const token = window.localStorage.getItem('Authorization'); // Obtém o token do localStorage
-
-    if (!token) {
-        console.error('Token não encontrado.'); // Verifica se o token está disponível
-        return;
-    }
-
-    // Função para buscar os dados do usuário
+document.addEventListener("DOMContentLoaded", function () {
     async function fetchUserProfile() {
         try {
-            const response = await fetch('http://localhost:8080/user/musician/profileMusician', {
+            const response = await fetch('http://localhost:8081/profile/info', {
                 method: 'GET',
                 headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
             });
 
             if (!response.ok) {
@@ -23,38 +15,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const userProfile = await response.json();
             displayUserProfile(userProfile);
+
+            // Armazena a imagem existente, se houver
+            if (userProfile.user && userProfile.user.IMAGE) {
+                perfilForm.dataset.hasImage = "true";
+            } else {
+                perfilForm.dataset.hasImage = "false";
+            }
+
         } catch (error) {
             console.error('Erro ao buscar o perfil do usuário:', error);
         }
     }
 
-    // Função para exibir os dados do usuário na tela
     function displayUserProfile(userProfile) {
         const nomeElement = document.getElementById('nome');
         const descricaoElement = document.getElementById('descricao');
         const opcoesElement = document.getElementById('opcoes');
 
         if (nomeElement) {
-            nomeElement.value = userProfile.user.name;
+            nomeElement.value = userProfile.user.NOME;
         }
 
-        if (descricaoElement && userProfile.comment !== null) {
-            descricaoElement.value = userProfile.comment;
+        if (descricaoElement) {
+            descricaoElement.value = userProfile.musician.COMENTARIO || '';
         }
 
         if (opcoesElement) {
-            opcoesElement.value = userProfile.user.musicalGenre;
+            opcoesElement.value = userProfile.user.GENERO_MUSICAL || '';
         }
     }
 
-    // Adiciona o evento de submissão para enviar os dados atualizados do usuário e a imagem
     const perfilForm = document.getElementById('perfilForm');
-    
-    if (perfilForm) {
-        perfilForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio do formulário
 
-            // Obtém os dados do formulário em JSON
+    if (perfilForm) {
+        perfilForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
             const comment = document.getElementById('descricao').value;
             const name = document.getElementById('nome').value;
             const musicalGenre = document.getElementById('opcoes').value;
@@ -69,50 +66,37 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
 
-            // Configura o cabeçalho da requisição para os dados do perfil
-            const headers = new Headers();
-            headers.append('Authorization', token);
-            headers.append('Content-Type', 'application/json');
-
-            // Envia a requisição PUT para atualizar os dados do perfil
-            fetch('http://localhost:8080/user/musician', {
+            fetch('http://localhost:8081/profile/update_user', {
                 method: 'PUT',
-                headers: headers,
-                body: userData
+                credentials: 'include',
+                body: userData,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro ao atualizar perfil');
                 }
-                return response.text(); // Use response.text() instead of response.json() to avoid parsing issues
+                return response.text();
             })
             .then(data => {
                 console.log('Perfil atualizado com sucesso!', data);
                 alert('Perfil atualizado com sucesso!');
+
                 const imageInput = document.getElementById('imagem');
-                if(imageInput){
-                    window.location.href = '../portMUSICO/portifolio-musico.html'; 
-                }
+                const file = imageInput.files[0];
 
-                // Após atualizar o perfil, envia a imagem
-                
-                
-                
-               //lembrar que tem que fazer oenvio mesmo sem foto
-                    
-                    const file = imageInput.files[0]; // Obtém o arquivo de imagem selecionado
-
+                if (file) {
                     const formData = new FormData();
-                    formData.append('image', file); // Adiciona o arquivo de imagem ao FormData
+                    formData.append('image', file);
 
-                    // Configura o cabeçalho da requisição para enviar a imagem
-                    const imageHeaders = new Headers();
-                    imageHeaders.append('Authorization', token);
+                    // Verifica se o usuário já possui uma imagem salva
+                    const method = perfilForm.dataset.hasImage === "true" ? 'PUT' : 'POST';
 
-                    // Envia a requisição POST para enviar a imagem
-                    fetch('http://localhost:8080/user/musician/upload', {
-                        method: 'POST',
-                        headers: imageHeaders,
+                    fetch('http://localhost:8081/pictures', {
+                        method: method,
+                        credentials: 'include',
                         body: formData
                     })
                     .then(imageResponse => {
@@ -124,20 +108,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     .then(imageData => {
                         console.log('Imagem enviada com sucesso!', imageData);
                         alert('Imagem enviada com sucesso!');
-
-                        // Redireciona para outra página após o envio bem-sucedido
-                        window.location.href = '../portMUSICO/portifolio-musico.html'; // Substitua pela URL desejada
+                        window.location.href = '/portifolio-musico';
                     })
                     .catch(imageError => console.error('Erro ao enviar imagem:', imageError));
-                
+                } else {
+                    window.location.href = '/portifolio-musico';
+                }
             })
-            
-            
             .catch(error => console.error('Erro ao atualizar perfil:', error));
-          
         });
     }
 
-    // Chama a função para buscar e exibir os dados do usuário
     fetchUserProfile();
 });

@@ -37,6 +37,10 @@ const Usuario = sequelize.define('Usuario', {
     type: Sequelize.STRING(15),
     allowNull: false
   },
+  IMAGE:{
+    type: Sequelize.STRING,
+    allowNull:true,
+  },
   GENERO_MUSICAL: {
     type: Sequelize.ENUM(
       'Rock', 'Sertanejo', 'Pop', 'Hip_Hop', 'Jazz', 'Blues', 'Classical',

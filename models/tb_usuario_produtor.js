@@ -29,11 +29,6 @@ const UsuarioProdutor = sequelize.define('UsuarioProdutor', {
         key: 'ID_USUARIO'
       }
     },
-    IMAGEM: {
-        
-      type: Sequelize.BLOB('medium'),
-      allowNull: true
-    }
   }, {
     tableName: 'tb_usuario_produtor',
     timestamps: false, // Ajuste conforme a necessidade
