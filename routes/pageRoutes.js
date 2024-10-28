@@ -44,6 +44,10 @@ router.get('/autenticacaoa',function(req,res){
     res.render('autenticacao');
 })
 
+router.get('/teste',function(req,res){
+    res.render('upload_test');
+})
+
 router.get('/portifolio-am', authenticateToken, function (req, res) {
     if (req.user.flagtype !== 2) {
         return res.status(403).json({ error: 'Acesso negado: somente Amantes da musica' });

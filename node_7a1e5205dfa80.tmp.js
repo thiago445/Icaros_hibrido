@@ -51,7 +51,10 @@ const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const profileRoutes = require('./routes/protectedRoutes/profilesRoutes')
 const PictureRoutes = require('./routes/protectedRoutes/pictureRoutes');
+const postRoutes = require('./routes/postRoutes');
 
+
+app.use('/posts', postRoutes);
 app.use('/prot', protectedRoutes);
 app.use('/profile', profileRoutes);
 app.use('/', pageRoutes);
