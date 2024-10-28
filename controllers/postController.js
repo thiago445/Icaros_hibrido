@@ -1,4 +1,4 @@
-const Post = require('../models/mongo/post');
+const Post = require('../models/mongo/Post');
 const { Dropbox } = require('dropbox');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg'); // Importa o ffmpeg
