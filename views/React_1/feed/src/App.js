@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import Header from './Header'
-import Body from './Body';
+import Feed from './Feed'
 
 function App() {
   return (
     <>
       <Header/>
-      <Body/>
+      <Feed/>
     </>
   );
 }

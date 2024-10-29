@@ -5,9 +5,9 @@ import { BsNewspaper } from 'react-icons/bs'; // Ícone para feed de notícias
 import CreatePost from './CreatePost';
 import Contacts from './Contacts';
 import Trends from './Trends';
-import './Body.css';
+import './Feed.css';
 
-const Body = () => {
+const Feed = () => {
   return (
     <div className="body-container">
       <Contacts />
@@ -40,14 +40,6 @@ const Body = () => {
           <p><strong>Lucia Martins</strong> compartilhou dicas de marketing.</p>
           <p>Não subestime o poder do marketing digital em 2024!</p>
         </div>
-        {/* Adicionando mais 30 posts */}
-        {Array.from({ length: 30 }).map((_, index) => (
-          <div className="post" key={index}>
-            <BsPersonCircle style={{ marginRight: '8px' }} />
-            <p><strong>Nome {index + 6}</strong> compartilhou algo interessante.</p>
-            <p>Este é um comentário de exemplo para a postagem número {index + 1}!</p>
-          </div>
-        ))}
         <div className="post">
           <BsPersonCircle style={{ marginRight: '8px' }} />
           <p><strong>Fernanda Oliveira</strong> publicou uma nova ilustração.</p>
@@ -79,4 +71,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export default Feed;
