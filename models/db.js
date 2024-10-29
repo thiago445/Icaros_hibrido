@@ -11,5 +11,15 @@ const sequelize = new Sequelize('railway', 'root', 'zKgPDqFifwujcxpSXOvqbMWmkRFk
     logging: false // Desativa o log de SQL, se preferir
 });
 
+// Verifica a conexão
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Conexão ao MySQL estabelecida com sucesso!');
+    } catch (error) {
+        console.error('Erro ao conectar ao MySQL:', error);
+    }
+})();
+
 // Exportar a conexão
 module.exports = { sequelize, Sequelize };
