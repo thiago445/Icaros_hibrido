@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const BASE_URL = document.getElementById('config').getAttribute('data-base-url');
     async function fetchUserProfile() {
         try {
-            const response = await fetch('http://localhost:8081/profile/info', {
+            const response = await fetch(`${BASE_URL}/profile/info`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            fetch('http://localhost:8081/profile/update_user', {
+            fetch(`${BASE_URL}/profile/update_user`, {
                 method: 'PUT',
                 credentials: 'include',
                 body: userData,
@@ -74,48 +75,48 @@ document.addEventListener("DOMContentLoaded", function () {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao atualizar perfil');
-                }
-                return response.text();
-            })
-            .then(data => {
-                console.log('Perfil atualizado com sucesso!', data);
-                alert('Perfil atualizado com sucesso!');
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao atualizar perfil');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Perfil atualizado com sucesso!', data);
+                    alert('Perfil atualizado com sucesso!');
 
-                const imageInput = document.getElementById('imagem');
-                const file = imageInput.files[0];
+                    const imageInput = document.getElementById('imagem');
+                    const file = imageInput.files[0];
 
-                if (file) {
-                    const formData = new FormData();
-                    formData.append('image', file);
+                    if (file) {
+                        const formData = new FormData();
+                        formData.append('image', file);
 
-                    // Verifica se o usuário já possui uma imagem salva
-                    const method = perfilForm.dataset.hasImage === "true" ? 'PUT' : 'POST';
+                        // Verifica se o usuário já possui uma imagem salva
+                        const method = perfilForm.dataset.hasImage === "true" ? 'PUT' : 'POST';
 
-                    fetch('http://localhost:8081/pictures', {
-                        method: method,
-                        credentials: 'include',
-                        body: formData
-                    })
-                    .then(imageResponse => {
-                        if (!imageResponse.ok) {
-                            throw new Error('Erro ao enviar imagem');
-                        }
-                        return imageResponse.text();
-                    })
-                    .then(imageData => {
-                        console.log('Imagem enviada com sucesso!', imageData);
-                        alert('Imagem enviada com sucesso!');
+                        fetch(`${BASE_URL}/pictures`, {
+                            method: method,
+                            credentials: 'include',
+                            body: formData
+                        })
+                            .then(imageResponse => {
+                                if (!imageResponse.ok) {
+                                    throw new Error('Erro ao enviar imagem');
+                                }
+                                return imageResponse.text();
+                            })
+                            .then(imageData => {
+                                console.log('Imagem enviada com sucesso!', imageData);
+                                alert('Imagem enviada com sucesso!');
+                                window.location.href = '/portifolio-musico';
+                            })
+                            .catch(imageError => console.error('Erro ao enviar imagem:', imageError));
+                    } else {
                         window.location.href = '/portifolio-musico';
-                    })
-                    .catch(imageError => console.error('Erro ao enviar imagem:', imageError));
-                } else {
-                    window.location.href = '/portifolio-musico';
-                }
-            })
-            .catch(error => console.error('Erro ao atualizar perfil:', error));
+                    }
+                })
+                .catch(error => console.error('Erro ao atualizar perfil:', error));
         });
     }
 

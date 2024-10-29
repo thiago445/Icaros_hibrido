@@ -12,7 +12,7 @@ require('./models/mongo/mongoDb');
 
 
 app.use(cors({
-    origin: 'http://localhost:8080', // domínio do cliente
+    origin: 'https://icaros-hibrido-1.onrender.com', // domínio do cliente
     credentials: true
 }));
 

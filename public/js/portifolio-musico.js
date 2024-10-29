@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const BASE_URL = document.getElementById('config').getAttribute('data-base-url');
     // Função para buscar os dados do usuário
     async function fetchUserProfile() {
         try {
-            const response = await fetch('http://localhost:8081/profile/info', {
+            const response = await fetch(`${BASE_URL}/profile/info`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Se houver uma imagem, busca a URL da imagem
             if (userProfile.user.IMAGE) {
-                const imageResponse = await fetch(`http://localhost:8081/pictures/${userProfile.user.IMAGE}`, {
+                const imageResponse = await fetch(`${BASE_URL}/pictures/${userProfile.user.IMAGE}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
