@@ -16,10 +16,13 @@ const sequelize = new Sequelize('railway', 'root', 'zKgPDqFifwujcxpSXOvqbMWmkRFk
     try {
         await sequelize.authenticate();
         console.log('Conexão ao MySQL estabelecida com sucesso!');
+
+        // Sincroniza todos os modelos, criando as tabelas se não existirem
+        await sequelize.sync({ alter: true }); // ou use { force: true } para recriar as tabelas
+        console.log('Tabelas sincronizadas com sucesso!');
     } catch (error) {
         console.error('Erro ao conectar ao MySQL:', error);
     }
 })();
 
-// Exportar a conexão
 module.exports = { sequelize, Sequelize };
