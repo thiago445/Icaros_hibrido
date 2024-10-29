@@ -3,12 +3,16 @@ const { Dropbox } = require('dropbox');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg'); // Importa o ffmpeg
 const path = require('path'); // Importa o path
+const { checkAndRefreshToken } = require('../config/dropboxconfig'); // Importa a função de verificação de token
 require('dotenv').config();
 
-const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
+let dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
 
 const uploadToDropbox = async (fileBuffer, dropboxPath) => {
     try {
+        await checkAndRefreshToken(); // Verifica e atualiza o token antes de enviar
+        dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN }); // Atualiza a instância do Dropbox com o token mais recente
+
         const uploadResponse = await dbx.filesUpload({
             path: dropboxPath,
             contents: fileBuffer,
@@ -104,7 +108,6 @@ exports.createPost = async (req, res) => {
         res.status(500).json({ error: 'Erro ao criar a postagem', details: error.message });
     }
 };
-
 
 exports.likePost = async (req, res) => {
     try {

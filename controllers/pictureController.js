@@ -3,13 +3,19 @@ const Usuario = require('../models/tb_usuario');
 const fs = require('fs');
 const path = require('path');
 const { Dropbox } = require('dropbox');     
+const { checkAndRefreshToken } = require('../config/dropboxconfig'); // Importe a função de verificação
 require('dotenv').config(); 
 
+// Função para obter o cliente do Dropbox com o token atualizado
+const getDropboxClient = async () => {
+    await checkAndRefreshToken(); // Verifica e atualiza o token, se necessário
+    return new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
+};
 
-const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
-
+// Função para fazer upload para o Dropbox
 const uploadToDropbox = async (localFilePath, dropboxPath) => {
     try {
+        const dbx = await getDropboxClient(); // Obtenha o cliente do Dropbox com o token atualizado
         const fileContent = fs.readFileSync(localFilePath); // Lê o conteúdo do arquivo
 
         // Faz o upload para o Dropbox
@@ -28,7 +34,6 @@ const uploadToDropbox = async (localFilePath, dropboxPath) => {
     }
 };
 
-
 exports.create = async (req, res) => {
     try {
         const { name } = req.body;
@@ -45,11 +50,11 @@ exports.create = async (req, res) => {
 
         // Upload para o Dropbox
         const dropboxPath = `/uploads/${file.filename}`;
-        const dropboxFilePath = await uploadToDropbox(file.path, dropboxPath); // Agora retorna a URL compartilhada
+        const dropboxFilePath = await uploadToDropbox(file.path, dropboxPath);
 
         const picture = new Picture({
             name,
-            src: dropboxFilePath, // Salva a URL compartilhada do Dropbox
+            src: dropboxFilePath, // Salva a URL do Dropbox
         });
         await picture.save();
 
@@ -65,7 +70,6 @@ exports.create = async (req, res) => {
     }
 };
 
-
 exports.getImage = async (req, res) => {
     try {
         const picture = await Picture.findById(req.params.id);
@@ -73,12 +77,11 @@ exports.getImage = async (req, res) => {
             return res.status(404).json({ error: 'Imagem não encontrada' });
         }
 
-        // Cria um link compartilhado para o arquivo (ao invés de armazenar o link permanentemente)
+        const dbx = await getDropboxClient(); // Obtenha o cliente do Dropbox com o token atualizado
         const sharedLinkResponse = await dbx.sharingCreateSharedLinkWithSettings({
             path: picture.src,
         });
 
-        // Retorna a URL do link compartilhado ajustado para exibição direta
         const directImageUrl = sharedLinkResponse.result.url.replace('dl=0', 'raw=1');
         res.json({ url: directImageUrl });
     } catch (error) {
@@ -86,18 +89,16 @@ exports.getImage = async (req, res) => {
     }
 };
 
-
 // Função para deletar um arquivo do Dropbox
 const deleteFromDropbox = async (filePath) => {
     try {
-        const dropbox = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
-        await dropbox.filesDeleteV2({ path: filePath }); // O filePath deve ser o caminho relativo salvo no MongoDB
+        const dbx = await getDropboxClient(); // Obtenha o cliente do Dropbox com o token atualizado
+        await dbx.filesDeleteV2({ path: filePath });
     } catch (error) {
         console.error("Erro ao deletar a imagem do Dropbox:", error);
         throw new Error("Não foi possível deletar a imagem antiga do Dropbox.");
     }
 };
-
 
 exports.updateImage = async (req, res) => {
     try {
@@ -109,7 +110,6 @@ exports.updateImage = async (req, res) => {
             return res.status(404).json({ error: 'Usuário não encontrado' });
         }
 
-        // Verifica se o usuário já possui uma imagem
         const existingPicture = await Picture.findById(user.IMAGE);
 
         if (!file) {
@@ -119,34 +119,26 @@ exports.updateImage = async (req, res) => {
         let dropboxFilePath;
         const dropboxPath = `/uploads/${file.filename}`;
 
-        // Se o usuário já tem uma imagem, remove o arquivo antigo
         if (existingPicture) {
-            // Exclui o arquivo antigo do Dropbox
             await deleteFromDropbox(existingPicture.src);
-
-            // Faz o upload do novo arquivo para o Dropbox
             dropboxFilePath = await uploadToDropbox(file.path, dropboxPath);
 
-            // Atualiza a imagem no MongoDB
             existingPicture.name = name;
-            existingPicture.src = dropboxPath; // Atualiza apenas o caminho do novo arquivo
+            existingPicture.src = dropboxFilePath; // Atualiza apenas o caminho do novo arquivo
             await existingPicture.save();
         } else {
-            // Se não existir uma imagem, cria uma nova
             dropboxFilePath = await uploadToDropbox(file.path, dropboxPath);
 
             const newPicture = new Picture({
                 name,
-                src: dropboxPath,
+                src: dropboxFilePath,
             });
             await newPicture.save();
             user.IMAGE = newPicture._id.toString(); // Atualiza a referência da imagem
         }
 
-        // Salva a referência da imagem no MySQL
         await user.save();
 
-        // Remove o arquivo local após o upload
         fs.unlinkSync(file.path);
 
         res.json({ picture: existingPicture || newPicture, msg: "Imagem atualizada com sucesso" });
@@ -154,6 +146,7 @@ exports.updateImage = async (req, res) => {
         res.status(500).json({ msg: "Erro ao atualizar a imagem", error });
     }
 };
+
 exports.remove = async (req, res) => {
     try {
         const picture = await Picture.findById(req.params.id);
@@ -161,9 +154,8 @@ exports.remove = async (req, res) => {
             return res.status(404).json({ message: "Imagem não encontrada" });
         }
 
-        // Remove o arquivo do sistema de arquivos (pode adicionar lógica para remover do Dropbox, se necessário)
-        fs.unlinkSync(picture.src);
-
+        // Remove o arquivo do sistema de arquivos
+        await deleteFromDropbox(picture.src); // Deleta do Dropbox também
         await Picture.findByIdAndDelete(req.params.id);
 
         res.json({ message: "Imagem removida com sucesso" });

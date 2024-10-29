@@ -1,66 +1,43 @@
+const axios = require('axios');
 require('dotenv').config();
-const fetch = require('node-fetch');
 
-let accessToken = process.env.DROPBOX_ACCESS_TOKEN;
-let refreshToken = process.env.DROPBOX_REFRESH_TOKEN;
+const DROPBOX_API_URL = 'https://api.dropbox.com/oauth2/token';
 
-async function refreshAccessToken() {
-    if (!refreshToken) {
-        throw new Error("Refresh token não está disponível.");
-    }
-
-    const response = await fetch('https://api.dropboxapi.com/oauth2/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            'grant_type': 'refresh_token',
-            'refresh_token': refreshToken,
-            'client_id': process.env.DROPBOX_CLIENT_ID, // Client ID do seu aplicativo
-            'client_secret': process.env.DROPBOX_CLIENT_SECRET, // Client Secret do seu aplicativo
-        }),
+// Função para obter um novo access token usando o refresh token
+async function refreshDropboxToken() {
+  try {
+    const response = await axios.post(DROPBOX_API_URL, null, {
+      params: {
+        grant_type: 'refresh_token',
+        refresh_token: process.env.DROPBOX_REFRESH_TOKEN,
+        client_id: process.env.DROPBOX_CLIENT_ID,
+        client_secret: process.env.DROPBOX_CLIENT_SECRET,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
 
-    if (!response.ok) {
-        throw new Error(`Erro ao renovar o token: ${response.statusText}`);
-    }
+    const newAccessToken = response.data.access_token;
 
-    const data = await response.json();
-    accessToken = data.access_token; // Atualiza o access token
-    refreshToken = data.refresh_token || refreshToken; // Atualiza o refresh token se retornado
+    // Atualize o access token em suas variáveis de ambiente ou banco de dados
+    process.env.DROPBOX_ACCESS_TOKEN = newAccessToken;
+    console.log('Access token renovado com sucesso!');
 
-    // Aqui você pode armazenar o novo access token e refresh token em um local seguro
-    console.log('Token de acesso renovado com sucesso.');
-
-    // Atualiza o arquivo .env ou onde você armazenar suas credenciais
-    updateEnvFile();
+    // Você pode salvar o novo token em um banco de dados ou sistema de configuração aqui
+    // Exemplo: db.saveAccessToken(newAccessToken);
+  } catch (error) {
+    console.error('Erro ao renovar o token:', error.response ? error.response.data : error.message);
+  }
 }
 
-function updateEnvFile() {
-    const fs = require('fs');
-    const envFilePath = './.env';
-
-    // Lê o arquivo .env e atualiza os tokens
-    const envContent = fs.readFileSync(envFilePath, 'utf-8');
-    const newEnvContent = envContent
-        .replace(/DROPBOX_ACCESS_TOKEN=.*/, `DROPBOX_ACCESS_TOKEN=${accessToken}`)
-        .replace(/DROPBOX_REFRESH_TOKEN=.*/, `DROPBOX_REFRESH_TOKEN=${refreshToken}`);
-
-    fs.writeFileSync(envFilePath, newEnvContent);
-}
-
-async function getAccessToken() {
-    if (!accessToken) {
-        throw new Error("Access token não está disponível.");
-    }
-
-    // Aqui você pode implementar lógica para verificar se o token está perto da expiração
-    // Ou apenas chamar a função de refresh para garantir que ele esteja atualizado
-    await refreshAccessToken();
-    return accessToken;
+// Função para ser chamada antes de usar o access token
+async function checkAndRefreshToken() {
+  // Verifique se o token está expirado antes de prosseguir
+  // Neste exemplo, vou chamar a função de renovação diretamente
+  await refreshDropboxToken();
 }
 
 module.exports = {
-    getAccessToken,
+  checkAndRefreshToken,
 };
