@@ -25,7 +25,7 @@ app.use(session({
 
 //base url para quando tiver dominio
 app.use((req, res, next) => {
-    res.locals.baseUrl = process.env.API_BASE_URL || 'http://localhost:8081';
+    res.locals.baseUrl = process.env.API_BASE_URL || 'https://icaros-hibrido-1.onrender.com';
     next();
   });
     
