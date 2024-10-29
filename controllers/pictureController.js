@@ -2,9 +2,9 @@ const Picture = require('../models/mongo/picture');
 const Usuario = require('../models/tb_usuario');
 const fs = require('fs');
 const path = require('path');
-const { Dropbox } = require('dropbox');     
+const { Dropbox } = require('dropbox');
 const { checkAndRefreshToken } = require('../config/dropboxconfig'); // Importe a função de verificação
-require('dotenv').config(); 
+require('dotenv').config();
 
 // Função para obter o cliente do Dropbox com o token atualizado
 const getDropboxClient = async () => {
@@ -74,20 +74,42 @@ exports.getImage = async (req, res) => {
     try {
         const picture = await Picture.findById(req.params.id);
         if (!picture) {
+            console.error('Imagem não encontrada para o ID:', req.params.id);
             return res.status(404).json({ error: 'Imagem não encontrada' });
         }
 
-        const dbx = await getDropboxClient(); // Obtenha o cliente do Dropbox com o token atualizado
-        const sharedLinkResponse = await dbx.sharingCreateSharedLinkWithSettings({
-            path: picture.src,
-        });
+        const dbx = await getDropboxClient();
+
+        // Verifica se já existe um link de compartilhamento para o arquivo
+        let sharedLinkResponse;
+        try {
+            sharedLinkResponse = await dbx.sharingListSharedLinks({
+                path: picture.src,
+                direct_only: true // Somente links diretos
+            });
+
+            // Se um link já existe, utiliza-o
+            if (sharedLinkResponse.result.links.length > 0) {
+                sharedLinkResponse = { result: sharedLinkResponse.result.links[0] };
+            } else {
+                // Cria um novo link de compartilhamento se não existir
+                sharedLinkResponse = await dbx.sharingCreateSharedLinkWithSettings({
+                    path: picture.src,
+                });
+            }
+        } catch (error) {
+            console.error('Erro ao listar/criar link de compartilhamento:', error);
+            return res.status(500).json({ error: 'Erro ao criar link de compartilhamento' });
+        }
 
         const directImageUrl = sharedLinkResponse.result.url.replace('dl=0', 'raw=1');
         res.json({ url: directImageUrl });
     } catch (error) {
+        console.error('Erro ao buscar a imagem:', error);
         res.status(500).json({ error: 'Erro ao buscar a imagem' });
     }
 };
+
 
 // Função para deletar um arquivo do Dropbox
 const deleteFromDropbox = async (filePath) => {
