@@ -61,6 +61,7 @@ router.put('/update_user', authenticateToken, async (req, res) => {
         }
         user.NOME = name || user.NOME; // Atualiza se um novo nome for fornecido
         user.GENERO_MUSICAL = musicalGenre || user.GENERO_MUSICAL; // Atualiza se um novo gênero musical for fornecido
+        user.NovoUsuario= true;
         await user.save();
 
         const musician = await UsuarioMusico.findOne({ where: { ID_USUARIO: user.ID_USUARIO } });
