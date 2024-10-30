@@ -68,6 +68,7 @@ const Feed = () => {
       </div>
       <Trends />
     </div>
+
   );
 };
 
