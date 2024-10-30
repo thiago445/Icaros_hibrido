@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: Icaros_hibrido-1  # Este é o nome do serviço, fornecido pelo Render
+    env: node                  # Ambiente de execução
+    plan: free                 # Plano de serviço escolhido
+    buildCommand: "npm install"   # Comando para instalar dependências
+    startCommand: "node index.js"     # Comando para iniciar a aplicação
+    initCommands:                 # Comandos que serão executados na configuração inicial
+      - apt-get update && apt-get install -y ffmpeg
