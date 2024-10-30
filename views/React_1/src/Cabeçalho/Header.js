@@ -13,7 +13,7 @@ function Header() {
     <header className="header">
       <div className="logo">
         <img src={Logo} alt="Logo" className="logo-image" />
-        Logo
+          Icaros
       </div>
       <div className="search-container">
         <input type="text" placeholder="Pesquisar..." className="search-input" />

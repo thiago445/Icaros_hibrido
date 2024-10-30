@@ -114,4 +114,36 @@ body {
     padding: 15px;
     border-radius: 8px;
   }
-  
+  /* src/pages/Profile.css */
+
+/* Estilo do vídeo de apresentação */
+.profile-video {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-video iframe {
+  width: 100%;
+  height: 315px; /* Define uma altura adequada para o vídeo */
+  border-radius: 8px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}

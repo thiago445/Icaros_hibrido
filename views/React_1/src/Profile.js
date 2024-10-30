@@ -1,6 +1,7 @@
-// src/pages/Profile.js 
+// src/pages/Profile.js
 import React, { useState, useEffect, useCallback } from 'react';
-import { BsPersonCircle, BsShare, BsPencil, BsNewspaper, BsFillGeoAltFill, BsFillInfoCircleFill, BsChatFill } from 'react-icons/bs'; // Adicionando novos ícones
+import { BsFillPersonPlusFill, BsPersonCircle, BsPencil,BsShare, BsNewspaper, BsFillGeoFill, BsFillInfoCircleFill, BsChatFill } from 'react-icons/bs';
+import ProfileVideo from './ProfileVideo';
 import './Profile.css';
 
 const Profile = () => {
@@ -9,6 +10,20 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const [editMode, setEditMode] = useState(false);
+
+  // State para armazenar os dados do perfil
+  const [profileData, setProfileData] = useState({
+    name: "Nome do Usuário",
+    title: "Cargo | Empresa",
+    location: "Localização",
+    summary: "Este é o resumo do perfil. Aqui você pode escrever sobre a experiência, habilidades e interesses do usuário, de forma breve e objetiva.",
+    experience: {
+      role: "Cargo",
+      companyPeriod: "Empresa - Período",
+      description: "Descrição das atividades realizadas, projetos conduzidos e responsabilidades."
+    }
+  });
 
   const handleConnect = () => {
     setIsConnected(true);
@@ -42,6 +57,29 @@ const Profile = () => {
     }
   };
 
+  const handleEditToggle = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleExperienceChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData(prevData => ({
+      ...prevData,
+      experience: {
+        ...prevData.experience,
+        [name]: value
+      }
+    }));
+  };
+
   return (
     <div className="body-container">
       <div className="profile-page" onScroll={handleScroll}>
@@ -54,26 +92,55 @@ const Profile = () => {
               alt="User Profile"
             />
             <div className="profile-meta">
-              <h1 className="profile-name">Nome do Usuário</h1>
-              <p className="profile-title">Cargo | Empresa</p>
-              <p className="profile-location">
-                <BsFillGeoAltFill style={{ marginRight: '8px' }} />
-                Localização
-              </p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={profileData.name}
+                  onChange={handleInputChange}
+                  className="profile-input"
+                />
+              ) : (
+                <h1 className="profile-name">{profileData.name}</h1>
+              )}
+              {editMode ? (
+                <input
+                  type="text"
+                  name="title"
+                  value={profileData.title}
+                  onChange={handleInputChange}
+                  className="profile-input"
+                />
+              ) : (
+                <p className="profile-title">{profileData.title}</p>
+              )}
+              {editMode ? (
+                <input
+                  type="text"
+                  name="location"
+                  value={profileData.location}
+                  onChange={handleInputChange}
+                  className="profile-input"
+                />
+              ) : (
+                <p className="profile-location">
+                  <BsFillGeoFill style={{ marginRight: '8px' }} />
+                  {profileData.location}
+                </p>
+              )}
               <div className="profile-actions">
                 <button className="profile-button" onClick={handleConnect}>
-                  {isConnected ? "Conectado" : "Conectar"}
+                <BsFillPersonPlusFill size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{isConnected ? "Conectado" : "Conectar"}
                 </button>
                 <button className="profile-button share-button">
-                  <BsShare size={16} />
+                  <BsShare size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>
                   Compartilhar
                 </button>
-                <button className="profile-button edit-button">
-                  <BsPencil size={16} />
-                  Editar Perfil
+                <button className="profile-button edit-button" onClick={handleEditToggle}>
+                <BsPencil size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{editMode ? "Salvar" : "Editar Perfil"}
                 </button>
                 <button className="profile-button message-button">
-                  <BsChatFill size={16} />
+                  <BsChatFill size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>
                   Mensagem
                 </button>
               </div>
@@ -86,21 +153,55 @@ const Profile = () => {
             <BsFillInfoCircleFill style={{ marginRight: '8px' }} />
             Sobre
           </h2>
-          <p>
-            Este é o resumo do perfil. Aqui você pode escrever sobre a experiência,
-            habilidades e interesses do usuário, de forma breve e objetiva.
-          </p>
+          {editMode ? (
+            <textarea
+              name="summary"
+              value={profileData.summary}
+              onChange={handleInputChange}
+              className="profile-textarea"
+            />
+          ) : (
+            <p>{profileData.summary}</p>
+          )}
         </div>
+
+        <ProfileVideo videoId="tFoNvW_UI7k?si=bluz3ycwaW5-uPzX" />
 
         <div className="profile-experience">
           <h2>Experiência</h2>
           <div className="experience-item">
-            <h3>Cargo</h3>
-            <p>Empresa - Período</p>
-            <p>
-              Descrição das atividades realizadas, projetos conduzidos e
-              responsabilidades.
-            </p>
+            {editMode ? (
+              <input
+                type="text"
+                name="role"
+                value={profileData.experience.role}
+                onChange={handleExperienceChange}
+                className="profile-input"
+              />
+            ) : (
+              <h3>{profileData.experience.role}</h3>
+            )}
+            {editMode ? (
+              <input
+                type="text"
+                name="companyPeriod"
+                value={profileData.experience.companyPeriod}
+                onChange={handleExperienceChange}
+                className="profile-input"
+              />
+            ) : (
+              <p>{profileData.experience.companyPeriod}</p>
+            )}
+            {editMode ? (
+              <textarea
+                name="description"
+                value={profileData.experience.description}
+                onChange={handleExperienceChange}
+                className="profile-textarea"
+              />
+            ) : (
+              <p>{profileData.experience.description}</p>
+            )}
           </div>
         </div>
 

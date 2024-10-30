@@ -49,9 +49,18 @@
 /* (restante do seu CSS) */
 
 .logo {
+    justify-content: center;
+    align-items: center;
     font-size: 24px; /* Tamanho da fonte do logo */
     font-weight: bold; /* Deixar o logo em negrito */
     margin-right: 20px; /* Espaço entre a logo e a barra de pesquisa */
+}
+
+.logo-image {
+    height: 30px; /* Ajuste a altura conforme necessário */
+    width: auto; /* Largura proporcional */
+    object-fit: contain; /* Garante que a imagem seja redimensionada sem distorção */
+    margin-right: 8px; /* Espaço entre a logo e o texto */
 }
 
 .search-container {
