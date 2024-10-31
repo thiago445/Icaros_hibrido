@@ -1,7 +1,7 @@
 // src/pages/Profile.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { BsFillPersonPlusFill, BsPersonCircle, BsPencil,BsShare, BsNewspaper, BsFillGeoFill, BsFillInfoCircleFill, BsChatFill } from 'react-icons/bs';
-import ProfileVideo from './ProfileVideo';
+import ProfileVideo from '../pProfileVideo/ProfileVideo';
 import './Profile.css';
 
 const Profile = () => {

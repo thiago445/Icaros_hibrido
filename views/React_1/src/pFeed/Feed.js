@@ -2,9 +2,9 @@
 import React from 'react';
 import { BsPersonCircle } from 'react-icons/bs'; // Ícone de perfil
 import { BsNewspaper } from 'react-icons/bs'; // Ícone para feed de notícias
-import CreatePost from './CreatePost';
-import Contacts from './Contacts';
-import Trends from './Trends';
+import CreatePost from '../pCreatePost/CreatePost';
+import Contacts from '../pContacts/Contacts';
+import Trends from '../pTrends/Trends';
 import './Feed.css';
 
 const Feed = () => {
