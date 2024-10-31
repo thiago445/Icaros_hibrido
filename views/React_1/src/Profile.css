@@ -1,0 +1,149 @@
+/* src/pages/Profile.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Faz com que o body e html ocupem 100% da altura */
+}
+
+body {
+    overflow: hidden; /* Impede rolagem no body */
+}
+
+.body-container {
+    display: flex; /* Mantém o flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    padding: 20px;
+    max-width: 100%; /* Permite que o container ocupe a largura total */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    overflow: hidden; /* Impede rolagem no body */
+}
+
+.profile-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+    width: 100%; /* Permite que o perfil ocupe toda a largura disponível */
+    max-width: 800px; /* Largura máxima do perfil */
+    margin: 0 auto; /* Centraliza o conteúdo do perfil */
+    padding: 20px; /* Adicionando um pouco de preenchimento */
+    overflow-y: auto; /* Habilita rolagem vertical apenas nesta seção */
+    height: calc(100vh - 80px); /* Altura total menos a altura do cabeçalho */
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #0073b1;
+    border-radius: 8px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Resto do CSS continua igual */
+
+  .profile-background {
+    height: 100px;
+    background-color: #005682;
+  }
+  
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .profile-meta h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .profile-title,
+  .profile-location {
+    font-size: 16px;
+  }
+  
+  .profile-button {
+    background-color: #0a66c2;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px; /* Adicionando espaço entre os botões */
+  }
+  
+  .profile-summary,
+  .profile-experience {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .profile-summary h2,
+  .profile-experience h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .experience-item h3 {
+    font-size: 16px;
+    color: #0073b1;
+  }
+  
+  .feed {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feed::-webkit-scrollbar {
+    width: 0; /* Oculta a barra de rolagem para Chrome, Safari e Opera */
+  }
+  
+  .post {
+    background-color: #e9e9e9; /* Cor de fundo dos posts */
+    margin: 15px 0; /* Espaçamento entre os posts */
+    padding: 15px;
+    border-radius: 8px;
+  }
+  /* src/pages/Profile.css */
+
+/* Estilo do vídeo de apresentação */
+.profile-video {
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.profile-video iframe {
+  width: 100%;
+  height: 315px; /* Define uma altura adequada para o vídeo */
+  border-radius: 8px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.profile-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
