@@ -34,6 +34,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
     border-radius: 4px; /* Bordas arredondadas */
     z-index: 1000; /* Garante que o dropdown fique acima de outros elementos */
+    text-decoration: none;
 }
 
 .dropdown-item {
@@ -92,7 +93,8 @@
     display: flex;
     align-items: center;
     color: #333; /* Cor padrão dos ícones e texto */
-    text-decoration: none; /* Remove sublinhado de links, se houver */
+    color: inherit;
+    text-decoration: none;
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
     transition: color 0.3s ease; /* Suaviza a transição de cor */
 }

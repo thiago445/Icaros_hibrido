@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BsHouse, BsPeople, BsFillBriefcaseFill, BsBell, BsPersonCircle, BsEnvelope } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { BsHouse, BsPeople, BsPersonCircle,} from 'react-icons/bs';
 import './Header.css';
 import Logo from './Icaros-branco.png'; // Importa a logo
 
@@ -24,20 +25,8 @@ function Header() {
           <span>Início</span>
         </div>
         <div className="nav-item">
-          <BsPeople size={24} />
-          <span>Rede</span>
-        </div>
-        <div className="nav-item">
-          <BsFillBriefcaseFill size={24} />
-          <span>Empregos</span>
-        </div>
-        <div className="nav-item">
-          <BsBell size={24} />
-          <span>Notificações</span>
-        </div>
-        <div className="nav-item">
-          <BsEnvelope size={24} />
-          <span>Mensagens</span>
+            <BsPeople size={24} />
+            <span><Link to="/feed">Feed</Link></span>
         </div>
       </div>
       <div className="profile" onClick={toggleDropdown}>
@@ -45,7 +34,7 @@ function Header() {
         <span>Usuário</span>
         {dropdownOpen && (
           <div className="dropdown">
-            <div className="dropdown-item">Configurações</div>
+            <div className="dropdown-item"><Link to="/profile">Perfil</Link></div>
             <div className="dropdown-item">Sair</div>
           </div>
         )}
