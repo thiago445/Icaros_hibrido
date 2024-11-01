@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 
 // Conexão com o banco de dados no Railway
-const sequelize = new Sequelize('railway', 'root', 'zKgPDqFifwujcxpSXOvqbMWmkRFkdxUO', {
+const sequelize = new Sequelize('railway', 'root', 'MkzzKLsbjrMLvPETVqKgdAYjxwfizvlT', {
     host: 'autorack.proxy.rlwy.net',
-    port: '32557',
+    port: '20799',
     dialect: 'mysql',
     dialectOptions: {
         connectTimeout: 60000 // Ajusta o tempo de conexão, caso necessário
