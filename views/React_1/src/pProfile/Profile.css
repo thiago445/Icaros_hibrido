@@ -1,6 +1,3 @@
-/* src/pages/Profile.css */
-
-/* Estrutura principal da página */
 .body-container {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
@@ -27,26 +24,24 @@
   grid-area: contacts;
 }
 
-/* Estilo do container de informações do perfil */
 .profile-info {
-  display: flex; /* Manter o display flex */
-  flex-direction: row; /* Colocando os itens em linha */
-  align-items: flex-start; /* Alinhando itens ao topo */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 20px;
   padding: 20px;
   background-color: #0073b1;
   border-radius: 8px;
   color: #fff;
   margin-bottom: 20px;
-  max-width: 100%; /* Para ocupar o espaço máximo permitido */
+  max-width: 100%;
 }
 
-/* Detalhes do perfil */
 .profile-details {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1; /* Permitindo que ocupe o restante do espaço */
+  flex: 1;
 }
 
 .profile-photo {
@@ -77,28 +72,24 @@
   font-size: 14px;
 }
 
-/* Ajuste dos containers Sobre e Experiência */
 .profile-summary, .profile-experience {
-  background-color: #0073b1; /* fundo azul */
+  background-color: #0073b1;
   border-radius: 8px;
-  padding: 10px; /* Reduzido para diminuir a altura */
-  color: #fff; /* texto branco para contraste */
-  width: 180px; /* Largura ajustada para ser menor */
-  margin-left: 20px; /* Margem à esquerda para espaçamento */
-  font-size: 14px; /* Tamanho da fonte reduzido */
+  padding: 10px;
+  color: #fff;
+  width: 180px;
+  margin-left: 20px;
+  font-size: 14px;
 }
 
-/* Títulos de Sobre e Experiência */
 .profile-summary h2, .profile-experience h2 {
-  font-size: 16px; /* Tamanho da fonte do título reduzido */
+  font-size: 16px;
 }
 
-/* Conteúdo de Sobre e Experiência */
 .profile-summary p, .profile-experience p {
-  font-size: 12px; /* Tamanho da fonte do conteúdo reduzido */
+  font-size: 12px;
 }
 
-/* Botões de ação do perfil */
 .profile-actions {
   display: flex;
   flex-direction: row;
@@ -121,7 +112,6 @@
   background-color: #003f5c;
 }
 
-/* Estilos de edição */
 .profile-input, .profile-textarea {
   width: 100%;
   padding: 8px;
@@ -130,7 +120,6 @@
   font-size: 14px;
 }
 
-/* Feed de postagens */
 .feed {
   background-color: #0f0f0f;
   border: 1px solid #1f1f1f;
@@ -163,7 +152,6 @@
   font-size: 16px;
 }
 
-/* Mídia */
 iframe {
   width: 100%;
   height: 315px;

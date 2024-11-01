@@ -5,21 +5,21 @@
     padding: 16px;
     margin-bottom: 16px;
     display: flex;
-    flex-direction: column; /* Ajuste para alinhar os botões verticalmente */
-    align-items: center; /* Centraliza o vídeo e os botões */
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-video {
     width: 100%;
-    max-width: 720px; /* Largura máxima */
-    height: 405px; /* Proporção 16:9 */
+    max-width: 720px;
+    height: 405px;
     border-radius: 8px;
-    margin-bottom: 12px; /* Espaço entre o vídeo e os botões */
+    margin-bottom: 12px;
 }
 
 .edit-container {
     display: flex;
-    gap: 8px; /* Espaço entre os botões */
+    gap: 8px;
     margin-top: 8px;
 }
 
