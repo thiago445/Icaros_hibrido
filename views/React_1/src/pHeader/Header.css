@@ -1,16 +1,18 @@
 .header {
+    text-decoration: none;
     display: flex;
+    color: #f0f0f0;
     align-items: center;
     justify-content: center; /* Alinha os itens com espaço entre eles */
     padding: 10px 20px;
-    background-color: #fff; /* Cor de fundo do header */
+    background-color: #1f1f1f; /* Cor de fundo do header */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
 }
 
 .profile {
     display: flex;
     align-items: center;
-    color: #333; /* Cor padrão do ícone e texto */
+    color: #f0f0f0; /* Cor padrão do ícone e texto */
     margin-left: 20px; /* Espaçamento à esquerda */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
     transition: color 0.3s ease; /* Suaviza a transição de cor */
@@ -18,7 +20,7 @@
 }
 
 .profile:hover {
-    color: #0077b5; /* Cor ao passar o mouse */
+    color: #ECD182; /* Cor ao passar o mouse */
 }
 
 .profile span {
@@ -29,7 +31,7 @@
     position: absolute; /* Para posicionar em relação ao perfil */
     top: 100%; /* Posiciona logo abaixo do perfil */
     right: 0; /* Alinha à direita */
-    background-color: white; /* Fundo branco */
+    background-color: #f0f0f0; /* Fundo branco */
     border: 1px solid #ccc; /* Borda cinza */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
     border-radius: 4px; /* Bordas arredondadas */
@@ -41,10 +43,11 @@
     padding: 10px 20px; /* Espaçamento interno */
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
     transition: background-color 0.3s ease; /* Suaviza a transição do fundo */
+    background-color: #1f1f1f;
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0; /* Cor ao passar o mouse */
+    background-color: #3f3f3f; /* Cor ao passar o mouse */
 }
 
 /* (restante do seu CSS) */
@@ -79,7 +82,7 @@
 }
 
 .search-input:focus {
-    border-color: #0077b5; /* Cor da borda ao focar */
+    border-color: #ECD182; /* Cor da borda ao focar */
     outline: none; /* Remove contorno padrão */
 }
 
@@ -92,7 +95,7 @@
 .nav-item {
     display: flex;
     align-items: center;
-    color: #333; /* Cor padrão dos ícones e texto */
+    color: #f0f0f0; /* Cor padrão dos ícones e texto */
     color: inherit;
     text-decoration: none;
     cursor: pointer; /* Muda o cursor para indicar que é clicável */
@@ -100,7 +103,7 @@
 }
 
 .nav-item:hover {
-    color: #0077b5; /* Cor ao passar o mouse */
+    color: #ECD182; /* Cor ao passar o mouse */
 }
 
 .nav-item span {

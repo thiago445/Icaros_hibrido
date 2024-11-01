@@ -10,7 +10,7 @@ import './Feed.css';
 const Feed = () => {
   return (
     <div className="body-container">
-      <Contacts />
+      <Trends />
       <div className="feed">
         <h2><BsNewspaper style={{ marginRight: '8px' }} />Feed de Posts</h2>
         <CreatePost />
@@ -66,7 +66,7 @@ const Feed = () => {
           <p>Acabei de terminar "O Poder do Hábito". Recomendo!</p>
         </div>
       </div>
-      <Trends />
+      <Contacts />
     </div>
 
   );

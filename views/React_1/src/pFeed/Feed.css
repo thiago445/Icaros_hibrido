@@ -8,34 +8,6 @@
     gap: 20px; /* Espaçamento entre os containers */
   }
   
-  .sidebar, .trending {
-    background-color: #f4f4f4; /* Cor de fundo */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Mantém os containers laterais fixos ao rolar */
-    top: 20px; /* Distância do topo da página */
-    height: fit-content; /* Altura ajusta-se ao conteúdo */
-  }
-  
-  .sidebar ul,
-  .trending ul {
-    list-style-type: none; /* Remove os marcadores padrão */
-    padding: 0; /* Remove o preenchimento padrão */
-  }
-  
-  .sidebar li,
-  .trending li {
-    padding: 10px; /* Espaçamento interno para cada item */
-    transition: background-color 0.3s ease; /* Suaviza a transição */
-  }
-  
-  .sidebar li:hover,
-  .trending li:hover {
-    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-  }
-  
   .feed {
     padding: 20px;
     background-color: #fff; /* Cor de fundo do feed */
@@ -68,10 +40,5 @@
     padding: 15px;
     border-radius: 8px;
     border-left: 4px solid #0077b5; /* Destaque à esquerda */
-  }
-  
-  .trending {
-    position: sticky; /* Mantém o container de tendências fixo ao rolar */
-    top: 20px; /* Distância do topo da página */
   }
   

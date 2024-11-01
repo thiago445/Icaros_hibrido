@@ -2,6 +2,7 @@
 import React from 'react';
 import { BsPersonCircle } from 'react-icons/bs'; // Ícone de perfil
 import { BsPeople } from 'react-icons/bs'; // Ícone para contatos
+import "./Contacts.css"
 
 const Contacts = () => {
   return (

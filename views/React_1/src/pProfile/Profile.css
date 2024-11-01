@@ -1,149 +1,172 @@
 /* src/pages/Profile.css */
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%; /* Faz com que o body e html ocupem 100% da altura */
-}
-
-body {
-    overflow: hidden; /* Impede rolagem no body */
-}
-
+/* Estrutura principal da página */
 .body-container {
-    display: flex; /* Mantém o flexbox */
-    justify-content: center; /* Centraliza horizontalmente */
-    padding: 20px;
-    max-width: 100%; /* Permite que o container ocupe a largura total */
-    margin: 0 auto; /* Centraliza horizontalmente */
-    overflow: hidden; /* Impede rolagem no body */
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-areas: 
+      "trends profile contacts";
+  gap: 20px;
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.trends {
+  grid-area: trends;
 }
 
 .profile-page {
-    font-family: Arial, sans-serif;
-    color: #333;
-    width: 100%; /* Permite que o perfil ocupe toda a largura disponível */
-    max-width: 800px; /* Largura máxima do perfil */
-    margin: 0 auto; /* Centraliza o conteúdo do perfil */
-    padding: 20px; /* Adicionando um pouco de preenchimento */
-    overflow-y: auto; /* Habilita rolagem vertical apenas nesta seção */
-    height: calc(100vh - 80px); /* Altura total menos a altura do cabeçalho */
+  grid-area: profile;
+  overflow-y: auto;
 }
 
+.contacts {
+  grid-area: contacts;
+}
+
+/* Estilo do container de informações do perfil */
 .profile-info {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background-color: #0073b1;
-    border-radius: 8px;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-/* Resto do CSS continua igual */
-
-  .profile-background {
-    height: 100px;
-    background-color: #005682;
-  }
-  
-  .profile-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-  
-  .profile-meta h1 {
-    font-size: 24px;
-    margin: 0;
-  }
-  
-  .profile-title,
-  .profile-location {
-    font-size: 16px;
-  }
-  
-  .profile-button {
-    background-color: #0a66c2;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-right: 10px; /* Adicionando espaço entre os botões */
-  }
-  
-  .profile-summary,
-  .profile-experience {
-    background-color: #fff;
-    border: 1px solid #e1e1e1;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .profile-summary h2,
-  .profile-experience h2 {
-    font-size: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-  }
-  
-  .experience-item h3 {
-    font-size: 16px;
-    color: #0073b1;
-  }
-  
-  .feed {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .feed::-webkit-scrollbar {
-    width: 0; /* Oculta a barra de rolagem para Chrome, Safari e Opera */
-  }
-  
-  .post {
-    background-color: #e9e9e9; /* Cor de fundo dos posts */
-    margin: 15px 0; /* Espaçamento entre os posts */
-    padding: 15px;
-    border-radius: 8px;
-  }
-  /* src/pages/Profile.css */
-
-/* Estilo do vídeo de apresentação */
-.profile-video {
-  background-color: #fff;
-  border: 1px solid #e1e1e1;
+  display: flex; /* Manter o display flex */
+  flex-direction: row; /* Colocando os itens em linha */
+  align-items: flex-start; /* Alinhando itens ao topo */
+  gap: 20px;
+  padding: 20px;
+  background-color: #0073b1;
   border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
+  color: #fff;
+  margin-bottom: 20px;
+  max-width: 100%; /* Para ocupar o espaço máximo permitido */
 }
 
-.profile-video iframe {
-  width: 100%;
-  height: 315px; /* Define uma altura adequada para o vídeo */
+/* Detalhes do perfil */
+.profile-details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1; /* Permitindo que ocupe o restante do espaço */
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-meta h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.profile-title {
+  font-size: 18px;
+}
+
+.profile-location {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Ajuste dos containers Sobre e Experiência */
+.profile-summary, .profile-experience {
+  background-color: #0073b1; /* fundo azul */
   border-radius: 8px;
+  padding: 10px; /* Reduzido para diminuir a altura */
+  color: #fff; /* texto branco para contraste */
+  width: 180px; /* Largura ajustada para ser menor */
+  margin-left: 20px; /* Margem à esquerda para espaçamento */
+  font-size: 14px; /* Tamanho da fonte reduzido */
 }
 
-.profile-input {
+/* Títulos de Sobre e Experiência */
+.profile-summary h2, .profile-experience h2 {
+  font-size: 16px; /* Tamanho da fonte do título reduzido */
+}
+
+/* Conteúdo de Sobre e Experiência */
+.profile-summary p, .profile-experience p {
+  font-size: 12px; /* Tamanho da fonte do conteúdo reduzido */
+}
+
+/* Botões de ação do perfil */
+.profile-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #005582;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: #003f5c;
+}
+
+/* Estilos de edição */
+.profile-input, .profile-textarea {
   width: 100%;
   padding: 8px;
-  margin-top: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 14px;
 }
 
-.profile-textarea {
+/* Feed de postagens */
+.feed {
+  background-color: #0f0f0f;
+  border: 1px solid #1f1f1f;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.feed h2 {
+  font-size: 20px;
+  border-bottom: 1px solid #f2f2f2;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  color: #0073b1;
+}
+
+.post {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+.post p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Mídia */
+iframe {
   width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
+  height: 315px;
+  border: none;
+  border-radius: 8px;
 }

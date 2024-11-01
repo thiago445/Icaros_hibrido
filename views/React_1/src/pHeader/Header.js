@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BsHouse, BsPeople, BsPersonCircle,} from 'react-icons/bs';
+import { BsHouse, BsPersonCircle, BsNewspaper} from 'react-icons/bs';
 import './Header.css';
 import Logo from './Icaros-branco.png'; // Importa a logo
 
@@ -13,8 +13,8 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src={Logo} alt="Logo" className="logo-image" />
-          Icaros
+        <span><Link to="/"><img src={Logo} alt="Logo" className="logo-image" />
+        </Link>Icaros</span>
       </div>
       <div className="search-container">
         <input type="text" placeholder="Pesquisar..." className="search-input" />
@@ -25,8 +25,9 @@ function Header() {
           <span>Início</span>
         </div>
         <div className="nav-item">
-            <BsPeople size={24} />
-            <span><Link to="/feed">Feed</Link></span>
+        <Link to="/feed"><BsNewspaper size={24} />
+            <span>Feed</span>
+        </Link>
         </div>
       </div>
       <div className="profile" onClick={toggleDropdown}>

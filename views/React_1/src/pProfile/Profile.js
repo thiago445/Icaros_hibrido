@@ -1,7 +1,9 @@
 // src/pages/Profile.js
 import React, { useState, useEffect, useCallback } from 'react';
-import { BsFillPersonPlusFill, BsPersonCircle, BsPencil,BsShare, BsNewspaper, BsFillGeoFill, BsFillInfoCircleFill, BsChatFill } from 'react-icons/bs';
+import { BsFillPersonPlusFill, BsPersonCircle, BsPencil, BsShare, BsNewspaper, BsFillGeoFill, BsFillInfoCircleFill } from 'react-icons/bs';
 import ProfileVideo from '../pProfileVideo/ProfileVideo';
+import Trends from '../pTrends/Trends';
+import Contacts from '../pContacts/Contacts';
 import './Profile.css';
 
 const Profile = () => {
@@ -12,16 +14,17 @@ const Profile = () => {
   const [page, setPage] = useState(1);
   const [editMode, setEditMode] = useState(false);
 
-  // State para armazenar os dados do perfil
   const [profileData, setProfileData] = useState({
     name: "Nome do Usuário",
-    title: "Cargo | Empresa",
+    title: "Perfil | Estilo Musical",
     location: "Localização",
-    summary: "Este é o resumo do perfil. Aqui você pode escrever sobre a experiência, habilidades e interesses do usuário, de forma breve e objetiva.",
+    summary: "Este é o resumo do perfil...",
+    musicStyle: "Estilo de Música",
+    profileType: "Tipo de Perfil",
     experience: {
       role: "Cargo",
       companyPeriod: "Empresa - Período",
-      description: "Descrição das atividades realizadas, projetos conduzidos e responsabilidades."
+      description: "Descrição das atividades..."
     }
   });
 
@@ -82,9 +85,9 @@ const Profile = () => {
 
   return (
     <div className="body-container">
+      <div className="trends"><Trends /></div>
       <div className="profile-page" onScroll={handleScroll}>
         <div className="profile-info">
-          <div className="profile-background"></div>
           <div className="profile-details">
             <img
               className="profile-photo"
@@ -130,80 +133,76 @@ const Profile = () => {
               )}
               <div className="profile-actions">
                 <button className="profile-button" onClick={handleConnect}>
-                <BsFillPersonPlusFill size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{isConnected ? "Conectado" : "Conectar"}
+                  <BsFillPersonPlusFill size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{isConnected ? "Conectado" : "Conectar"}
                 </button>
                 <button className="profile-button share-button">
                   <BsShare size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>
                   Compartilhar
                 </button>
                 <button className="profile-button edit-button" onClick={handleEditToggle}>
-                <BsPencil size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{editMode ? "Salvar" : "Editar Perfil"}
-                </button>
-                <button className="profile-button message-button">
-                  <BsChatFill size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>
-                  Mensagem
+                  <BsPencil size={16} style={{ marginRight: '8px', alignItems: 'center' }}/>{editMode ? "Salvar" : "Editar Perfil"}
                 </button>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="profile-summary">
-          <h2>
-            <BsFillInfoCircleFill style={{ marginRight: '8px' }} />
-            Sobre
-          </h2>
-          {editMode ? (
-            <textarea
-              name="summary"
-              value={profileData.summary}
-              onChange={handleInputChange}
-              className="profile-textarea"
-            />
-          ) : (
-            <p>{profileData.summary}</p>
-          )}
-        </div>
-
-        <ProfileVideo videoId="tFoNvW_UI7k?si=bluz3ycwaW5-uPzX" />
-
-        <div className="profile-experience">
-          <h2>Experiência</h2>
-          <div className="experience-item">
-            {editMode ? (
-              <input
-                type="text"
-                name="role"
-                value={profileData.experience.role}
-                onChange={handleExperienceChange}
-                className="profile-input"
-              />
-            ) : (
-              <h3>{profileData.experience.role}</h3>
-            )}
-            {editMode ? (
-              <input
-                type="text"
-                name="companyPeriod"
-                value={profileData.experience.companyPeriod}
-                onChange={handleExperienceChange}
-                className="profile-input"
-              />
-            ) : (
-              <p>{profileData.experience.companyPeriod}</p>
-            )}
+          <div className="profile-summary">
+            <h2>
+              <BsFillInfoCircleFill style={{ marginRight: '8px' }} />
+              Sobre
+            </h2>
             {editMode ? (
               <textarea
-                name="description"
-                value={profileData.experience.description}
-                onChange={handleExperienceChange}
+                name="summary"
+                value={profileData.summary}
+                onChange={handleInputChange}
                 className="profile-textarea"
               />
             ) : (
-              <p>{profileData.experience.description}</p>
+              <p>{profileData.summary}</p>
             )}
           </div>
+
+          <div className="profile-experience">
+            <h2>Experiência</h2>
+            <div className="experience-item">
+              {editMode ? (
+                <input
+                  type="text"
+                  name="role"
+                  value={profileData.experience.role}
+                  onChange={handleExperienceChange}
+                  className="profile-input"
+                />
+              ) : (
+                <h3>{profileData.experience.role}</h3>
+              )}
+              {editMode ? (
+                <input
+                  type="text"
+                  name="companyPeriod"
+                  value={profileData.experience.companyPeriod}
+                  onChange={handleExperienceChange}
+                  className="profile-input"
+                />
+              ) : (
+                <p>{profileData.experience.companyPeriod}</p>
+              )}
+              {editMode ? (
+                <textarea
+                  name="description"
+                  value={profileData.experience.description}
+                  onChange={handleExperienceChange}
+                  className="profile-textarea"
+                />
+              ) : (
+                <p>{profileData.experience.description}</p>
+              )}
+            </div>
+          </div>
         </div>
+
+        <ProfileVideo videoId="tFoNvW_UI7k?si=bluz3ycwaW5-uPzX" />
 
         <div className="feed">
           <h2><BsNewspaper style={{ marginRight: '8px' }} />Postagens</h2>
@@ -217,6 +216,7 @@ const Profile = () => {
           {!hasMore && <p>Você chegou ao fim das postagens.</p>}
         </div>
       </div>
+      <div className="contacts"><Contacts /></div>
     </div>
   );
 };

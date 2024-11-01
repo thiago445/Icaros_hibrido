@@ -2,6 +2,7 @@
 import React from 'react';
 import { BsGraphUp } from 'react-icons/bs'; // Ícone para tendências
 import { BsBarChart } from 'react-icons/bs'; // Ícone para gráfico
+import "./Trends.css"
 
 const Trends = () => {
   return (
