@@ -17,7 +17,6 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 .informacoes{
     color: #f0f0f0;
     text-align: center;
@@ -32,13 +31,11 @@ body {
     border: 2px solid #ECD182;
     margin-top: 2px;
 }
-
 .cabecalho img {
     width: 3vw;
     height: auto;
     margin-right: 10px;
 }
-
 .cabecalho p {
     font-weight: 700;
     color: #f9f9f9;

@@ -40,7 +40,7 @@ router.get('/attProdutor', authenticateToken, function (req, res) {
 });
 
 
-router.get('/autenticacaoa',function(req,res){
+router.get('/autenticacao',function(req,res){
     res.render('autenticacao');
 })
 
