@@ -12,7 +12,7 @@ require('./models/mongo/mongoDb');
 
 
 app.use(cors({
-    origin: 'https://icaros-hibrido-1.onrender.com', // domínio do cliente
+    origin: 'http://localhost:8081', // domínio do cliente
     credentials: true
 }));
 
@@ -25,7 +25,7 @@ app.use(session({
 
 //base url para quando tiver dominio
 app.use((req, res, next) => {
-    res.locals.baseUrl = process.env.API_BASE_URL || 'https://icaros-hibrido-1.onrender.com';
+    res.locals.baseUrl = process.env.API_BASE_URL || 'http://localhost:8081';
     next();
   });
     
